@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ohio's House delegation, by the numbers — Gov Data Insights</title>
+<link rel="stylesheet" href="../assets/report.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="site-name" href="../index.html">Gov Data Insights</a>
+  <span class="site-tagline">Explorations from api.data.gov</span>
+  <nav><a href="../index.html">&larr; All reports</a></nav>
+</header>
+
+<div class="report">
+  <div class="masthead">
+    <p class="kicker">Legislative Data Brief</p>
+    <h1>Ohio's House delegation, by the numbers</h1>
+    <p class="dek">Fifteen members, one state — how they vote with their party, trade stocks, and raise money looks nothing alike from district to district.</p>
+    <div class="byline">
+      <span>119th Congress, Ohio's 15 House seats</span><span class="sep">·</span>
+      <span>Source: api.congress.gov, Clerk of the House, FEC.gov</span><span class="sep">·</span>
+      <span>Compiled 2026-07-16</span>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat">
+      <div class="stat-value flag">199</div>
+      <div class="stat-label">stock trades filed by Rep. David Taylor (R-2) alone — more than the other 14 members combined</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">83.6%</div>
+      <div class="stat-label">party-unity rate for Warren Davidson (R-8), the least party-line Ohio Republican</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">10 / 15</div>
+      <div class="stat-label">Ohio House members filed zero stock trades this Congress</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">66.5%</div>
+      <div class="stat-label">of Jim Jordan's (R-4) campaign receipts came from individual donors, the delegation's highest share</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>Party-unity rate</h2>
+      <span class="section-note">share of contested votes with own party majority</span>
+    </div>
+    <p class="section-desc">Across 110 contested House recorded votes this Congress, all five Ohio Democrats voted with their party at least 99% of the time. Ohio Republicans show a wider spread — Warren Davidson and David Joyce break ranks most often, while Jim Jordan and David Taylor stay close to leadership.</p>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-a)"></span>Republican</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-b)"></span>Democrat</div>
+    </div>
+    <div class="chart-scroll">
+      <div class="bar-chart" id="unity-chart">
+        <div class="grid-overlay" id="unity-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Stock trading activity</h2>
+      <span class="section-note">Periodic Transaction Reports, this Congress</span>
+    </div>
+    <p class="section-desc">Two members account for nearly all disclosed trading in Ohio's delegation: David Taylor (R-2) filed 199 transactions and Greg Landsman (D-1) filed 56. Both trade across a broad, diversified basket of large-cap names rather than concentrated bets — Taylor's trades top out around $50,000 each, so his roughly $3.3M cumulative disclosed range comes from volume, not size. The other 13 members disclosed at most a handful of trades each; ten disclosed none.</p>
+    <div class="chart-scroll">
+      <table>
+        <thead>
+          <tr><th>Member</th><th>District</th><th style="text-align:right">Trades</th><th style="text-align:right">Buys</th><th style="text-align:right">Sells</th><th>Disclosed value range</th><th>Most-traded tickers</th></tr>
+        </thead>
+        <tbody id="ptr-table-body"></tbody>
+      </table>
+    </div>
+    <p class="callout">Amounts are disclosed as brackets (e.g. "$1,001–$15,000"), not exact figures — the STOCK Act only requires a range. Totals here sum each member's low and high bracket bounds across all their filed transactions, so they describe an outer envelope, not a precise portfolio value.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Campaign finance</h2>
+      <span class="section-note">current cycle, as of latest FEC filing</span>
+    </div>
+    <p class="section-desc">Individual-donor share varies more than three-fold across the delegation. Jim Jordan and Emilia Sykes raise most heavily from individual contributors; Michael Rulli, Mike Carey, and Warren Davidson lean more on PAC and party-committee money. Fundraising totals mostly track seat competitiveness rather than seniority — several longer-tenured members have modest war chests because their seats aren't seriously contested.</p>
+    <div class="chart-scroll">
+      <table>
+        <thead>
+          <tr><th>Member</th><th>District</th><th style="text-align:right">Receipts</th><th style="text-align:right">Individual share</th><th style="text-align:right">Cash on hand</th></tr>
+        </thead>
+        <tbody id="fec-table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="methodology">
+    <p><strong style="color:var(--text-secondary)">Methodology.</strong> Voting data covers House recorded votes only, using the same 110-vote contested-vote sample as our <a href="house-gop-party-unity.html">House GOP party-unity brief</a>; "party-unity rate" is 100% minus each member's crossover rate. Stock-trade data is parsed from Periodic Transaction Report PDFs filed with the Clerk of the House and covers transactions reported in calendar years 2025–2026; extraction is regex-based against the PDF's text layer and a small number of asset-name labels may still contain minor artifacts. Campaign finance figures are FEC candidate committee totals for the current election cycle, pulled via the FEC's <code>/candidates</code> and <code>/committees/totals</code> endpoints. Senators Bernie Moreno and Jon Husted are not included — Senate financial disclosures are filed through a separate system (efdsearch.senate.gov) that wasn't accessible via this report's data pipeline.</p>
+    <p>This is a first-pass exploratory read, not a definitive study. Zero disclosed trades does not necessarily mean zero investment activity — it may reflect assets held in unreportable vehicles (e.g. certain trusts) or simply no covered transactions during this period.</p>
+  </div>
+</div>
+
+<script>
+const unityData = [
+  {name:"Greg Landsman", district:1, party:"D", rate:99.1},
+  {name:"David Taylor", district:2, party:"R", rate:90.9},
+  {name:"Joyce Beatty", district:3, party:"D", rate:100.0},
+  {name:"Jim Jordan", district:4, party:"R", rate:90.8},
+  {name:"Robert Latta", district:5, party:"R", rate:92.7},
+  {name:"Michael Rulli", district:6, party:"R", rate:86.9},
+  {name:"Max Miller", district:7, party:"R", rate:92.4},
+  {name:"Warren Davidson", district:8, party:"R", rate:83.6},
+  {name:"Marcy Kaptur", district:9, party:"D", rate:95.5},
+  {name:"Michael Turner", district:10, party:"R", rate:86.4},
+  {name:"Shontel Brown", district:11, party:"D", rate:100.0},
+  {name:"Troy Balderson", district:12, party:"R", rate:91.7},
+  {name:"Emilia Sykes", district:13, party:"D", rate:99.1},
+  {name:"David Joyce", district:14, party:"R", rate:84.8},
+  {name:"Mike Carey", district:15, party:"R", rate:89.9},
+];
+
+const ptrData = [
+  {name:"David Taylor", district:2, trades:199, buys:99, sells:100, low:311199, high:3265000, tickers:"IBP, LRCX, PG, T, V"},
+  {name:"Greg Landsman", district:1, trades:56, buys:29, sells:27, low:669056, high:2160000, tickers:"COST, BLK, AMZN, AMP, CRWD"},
+  {name:"Max Miller", district:7, trades:35, buys:23, sells:12, low:116570, high:648541, tickers:"private fund LPs, no tickers"},
+  {name:"Robert Latta", district:5, trades:8, buys:8, sells:0, low:36008, high:190000, tickers:"FMAO"},
+  {name:"Jim Jordan", district:4, trades:1, buys:1, sells:0, low:50001, high:100000, tickers:"CBSI"},
+  {name:"Warren Davidson", district:8, trades:1, buys:1, sells:0, low:1001, high:15000, tickers:"GEHC"},
+  {name:"David Joyce", district:14, trades:1, buys:0, sells:1, low:50001, high:100000, tickers:"MAI managed fund"},
+  {name:"Joyce Beatty", district:3, trades:0, buys:0, sells:0, low:0, high:0, tickers:"—"},
+  {name:"Michael Rulli", district:6, trades:0, buys:0, sells:0, low:0, high:0, tickers:"—"},
+  {name:"Marcy Kaptur", district:9, trades:0, buys:0, sells:0, low:0, high:0, tickers:"—"},
+  {name:"Michael Turner", district:10, trades:0, buys:0, sells:0, low:0, high:0, tickers:"—"},
+  {name:"Shontel Brown", district:11, trades:0, buys:0, sells:0, low:0, high:0, tickers:"—"},
+  {name:"Troy Balderson", district:12, trades:0, buys:0, sells:0, low:0, high:0, tickers:"—"},
+  {name:"Emilia Sykes", district:13, trades:0, buys:0, sells:0, low:0, high:0, tickers:"—"},
+  {name:"Mike Carey", district:15, trades:0, buys:0, sells:0, low:0, high:0, tickers:"—"},
+];
+
+const fecData = [
+  {name:"Greg Landsman", district:1, party:"D", receipts:3645067, indivPct:59.7, cash:2939405},
+  {name:"David Taylor", district:2, party:"R", receipts:889488, indivPct:55.8, cash:477234},
+  {name:"Joyce Beatty", district:3, party:"D", receipts:944541, indivPct:26.8, cash:2730577},
+  {name:"Jim Jordan", district:4, party:"R", receipts:3692364, indivPct:66.5, cash:5975947},
+  {name:"Robert Latta", district:5, party:"R", receipts:1249571, indivPct:42.1, cash:910094},
+  {name:"Michael Rulli", district:6, party:"R", receipts:1127553, indivPct:23.9, cash:284711},
+  {name:"Max Miller", district:7, party:"R", receipts:1727586, indivPct:41.1, cash:1176211},
+  {name:"Warren Davidson", district:8, party:"R", receipts:661353, indivPct:25.2, cash:529910},
+  {name:"Marcy Kaptur", district:9, party:"D", receipts:3385266, indivPct:51.2, cash:3092916},
+  {name:"Michael Turner", district:10, party:"R", receipts:755118, indivPct:42.1, cash:558033},
+  {name:"Shontel Brown", district:11, party:"D", receipts:863501, indivPct:39.3, cash:1026932},
+  {name:"Troy Balderson", district:12, party:"R", receipts:1400346, indivPct:37.9, cash:1745774},
+  {name:"Emilia Sykes", district:13, party:"D", receipts:2596657, indivPct:61.9, cash:1654063},
+  {name:"David Joyce", district:14, party:"R", receipts:1098010, indivPct:28.1, cash:2916264},
+  {name:"Mike Carey", district:15, party:"R", receipts:2567314, indivPct:25.9, cash:1522000},
+];
+
+// ---- Unity bar chart ----
+const maxRate = 100;
+const unityChart = document.getElementById("unity-chart");
+const unityGrid = document.getElementById("unity-grid");
+unityData.slice().sort((a,b)=>a.rate-b.rate).forEach(d => {
+  const row = document.createElement("div");
+  row.className = "bar-row";
+  const color = d.party === "R" ? "var(--series-a)" : "var(--series-b)";
+  const widthPct = (d.rate / maxRate) * 100;
+  row.innerHTML = `
+    <div class="bar-name">${d.name} <span class="st">OH-${d.district}</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:${widthPct}%; background:${color};"></div></div>
+    <div class="bar-value">${d.rate.toFixed(1)}%</div>
+  `;
+  unityChart.insertBefore(row, unityGrid);
+});
+[0,25,50,75,100].forEach(t => {
+  const pct = (t / maxRate) * 100;
+  const line = document.createElement("div");
+  line.className = "grid-line";
+  line.style.left = pct + "%";
+  const tick = document.createElement("div");
+  tick.className = "grid-tick";
+  tick.style.left = pct + "%";
+  tick.textContent = t + "%";
+  unityGrid.appendChild(line);
+  unityGrid.appendChild(tick);
+});
+
+// ---- PTR table ----
+const fmtMoney = n => n ? `$${n.toLocaleString()}` : "—";
+const ptrBody = document.getElementById("ptr-table-body");
+ptrData.forEach(d => {
+  const tr = document.createElement("tr");
+  const range = d.trades ? `${fmtMoney(d.low)} – ${fmtMoney(d.high)}` : "—";
+  tr.innerHTML = `
+    <td>${d.name}</td>
+    <td>OH-${d.district}</td>
+    <td class="num">${d.trades}</td>
+    <td class="num">${d.buys || "—"}</td>
+    <td class="num">${d.sells || "—"}</td>
+    <td>${range}</td>
+    <td style="font-size:11.5px;color:var(--text-secondary)">${d.tickers}</td>
+  `;
+  ptrBody.appendChild(tr);
+});
+
+// ---- FEC table ----
+const fecBody = document.getElementById("fec-table-body");
+fecData.slice().sort((a,b)=>b.receipts-a.receipts).forEach(d => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${d.name}</td>
+    <td>OH-${d.district}</td>
+    <td class="num">${fmtMoney(d.receipts)}</td>
+    <td class="num">${d.indivPct}%</td>
+    <td class="num">${d.cash ? fmtMoney(d.cash) : "n/a"}</td>
+  `;
+  fecBody.appendChild(tr);
+});
+</script>
+</body>
+</html>

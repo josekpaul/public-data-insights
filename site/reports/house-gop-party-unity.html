@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where House Republicans break ranks — Gov Data Insights</title>
+<link rel="stylesheet" href="../assets/report.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="site-name" href="../index.html">Gov Data Insights</a>
+  <span class="site-tagline">Explorations from api.data.gov</span>
+  <nav><a href="../index.html">&larr; All reports</a></nav>
+</header>
+
+<div class="report">
+  <div class="masthead">
+    <p class="kicker">Legislative Data Brief</p>
+    <h1>Where House Republicans break ranks</h1>
+    <p class="dek">A narrow majority means a handful of defectors can decide any close vote — and this Congress, all of them come from one side of the aisle.</p>
+    <div class="byline">
+      <span>119th Congress, House recorded votes</span><span class="sep">·</span>
+      <span>Source: api.congress.gov</span><span class="sep">·</span>
+      <span>Compiled 2026-07-15</span>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat">
+      <div class="stat-value flag">25 / 25</div>
+      <div class="stat-label">of the top defectors by rate are Republican</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">30%</div>
+      <div class="stat-label">of contested votes Thomas Massie (R-KY) broke from his party</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">110</div>
+      <div class="stat-label">contested recorded votes analyzed this Congress</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">104</div>
+      <div class="stat-label">members crossed party lines on the single most-split vote</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>Who breaks from the House GOP most often</h2>
+      <span class="section-note">min. 30 votes analyzed</span>
+    </div>
+    <p class="section-desc">Share of contested recorded votes where the member voted against their own party's majority position. No Democrat qualifies for this list at any vote-count threshold — House Democratic unity has held throughout the session.</p>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-a)"></span>Freedom Caucus / ideological-right bloc</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-b)"></span>Frontline / swing-district bloc</div>
+    </div>
+    <div class="chart-scroll">
+      <div class="bar-chart" id="bar-chart">
+        <div class="grid-overlay" id="grid-overlay"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Most party-splitting votes</h2>
+      <span class="section-note">by total crossover votes</span>
+    </div>
+    <p class="section-desc">Ranked by total members, both parties combined, voting against their own party's majority. Nearly all are floor amendments rather than final-passage votes — amendments are where intra-party disagreement plays out before a bill's leadership-brokered version comes to a final vote.</p>
+    <div class="chart-scroll">
+      <table>
+        <thead>
+          <tr><th>Vote</th><th>Date</th><th>Result</th><th style="text-align:right">Crossover votes</th></tr>
+        </thead>
+        <tbody id="vote-table-body"></tbody>
+      </table>
+    </div>
+    <p class="callout">Rolls 228–237 (Sept 3–4, 2025) were a floor amendment marathon on <a href="https://www.congress.gov/bill/119/house-bill/4553" target="_blank" rel="noopener">H.R. 4553, the Energy &amp; Water Development Appropriations Act, 2026</a> — appropriations bills are the classic venue for intra-party spending fights. On roll 234 specifically, Republicans split 120–96 on their own member's amendment while Democrats voted 0–211 in lockstep against it.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Territorial delegates</h2>
+      <span class="section-note">excluded from ranking above</span>
+    </div>
+    <p class="section-desc">Delegates can cast recorded votes in Committee of the Whole but not on final passage, so their vote pool differs enough from voting members that their high rates are shown separately rather than folded into the main ranking.</p>
+    <table>
+      <thead><tr><th>Member</th><th>Party / territory</th><th style="text-align:right">Crossover rate</th></tr></thead>
+      <tbody>
+        <tr><td>Kimberlyn King-Hinds</td><td>R · N. Mariana Islands</td><td class="num">14 / 30 (47%)</td></tr>
+        <tr><td>James Moylan</td><td>R · Guam</td><td class="num">14 / 33 (42%)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="methodology">
+    <p><strong style="color:var(--text-secondary)">Methodology.</strong> Sample covers House recorded votes only (Senate not included). "2/3 Yea-and-Nay" suspension-calendar votes are excluded — they pass near-unanimously by procedural design and would dilute genuine disagreement. A member's "crossover" is a Yea/Aye or Nay/No vote that differs from their own party's majority position on that roll call; vote-cast vocabulary differs between bill votes (Yea/Nay) and amendment votes (Aye/No) and both are normalized here.</p>
+    <p>This is a first-pass exploratory read, not a definitive study — the 110-vote sample reflects contested recorded votes available via the API at compile time, and rankings may shift as the session continues.</p>
+  </div>
+</div>
+
+<script>
+const data = [
+  {name:"Thomas Massie", state:"KY", rate:30.1, crossovers:31, total:103, bloc:"ideological"},
+  {name:"Marjorie Greene", state:"GA", rate:25.4, crossovers:17, total:67, bloc:"ideological"},
+  {name:"Brian Fitzpatrick", state:"PA", rate:24.3, crossovers:26, total:107, bloc:"swing"},
+  {name:"Michael Lawler", state:"NY", rate:22.2, crossovers:24, total:108, bloc:"swing"},
+  {name:"Thomas Kean", state:"NJ", rate:19.8, crossovers:17, total:86, bloc:"swing"},
+  {name:"Ryan Mackenzie", state:"PA", rate:19.1, crossovers:21, total:110, bloc:"swing"},
+  {name:"Kevin Kiley", state:"CA", rate:18.8, crossovers:16, total:85, bloc:"ideological"},
+  {name:"Tim Burchett", state:"TN", rate:18.6, crossovers:19, total:102, bloc:"ideological"},
+  {name:"Andrew Garbarino", state:"NY", rate:17.6, crossovers:19, total:108, bloc:"swing"},
+  {name:"Nick LaLota", state:"NY", rate:17.6, crossovers:19, total:108, bloc:"swing"},
+  {name:"Chip Roy", state:"TX", rate:16.5, crossovers:17, total:103, bloc:"ideological"},
+  {name:"Warren Davidson", state:"OH", rate:16.4, crossovers:18, total:110, bloc:"ideological"},
+  {name:"Josh Brecheen", state:"OK", rate:16.0, crossovers:17, total:106, bloc:"ideological"},
+  {name:"Elijah Crane", state:"AZ", rate:15.7, crossovers:17, total:108, bloc:"ideological"},
+  {name:"Don Bacon", state:"NE", rate:15.6, crossovers:17, total:109, bloc:"swing"},
+  {name:"Robert Bresnahan", state:"PA", rate:15.6, crossovers:17, total:109, bloc:"swing"},
+  {name:"Jennifer Kiggans", state:"VA", rate:15.5, crossovers:17, total:110, bloc:"swing"},
+  {name:"David Joyce", state:"OH", rate:15.2, crossovers:16, total:105, bloc:"swing"},
+  {name:"Lauren Boebert", state:"CO", rate:14.8, crossovers:16, total:108, bloc:"ideological"},
+  {name:"David Valadao", state:"CA", rate:14.7, crossovers:16, total:109, bloc:"swing"},
+];
+
+const votes = [
+  {label:"Amdt 54 to H.R. 4016", date:"2025-07-18", result:"Failed", crossovers:104, url:"https://www.congress.gov/amendment/119/house-amendment/54",
+   desc:"Greene (R-GA) amendment to strike funding for HIV prevention education abroad, on the Defense Appropriations Act."},
+  {label:"Amdt 73 to H.R. 4553", date:"2025-09-03", result:"Failed", crossovers:96, url:"https://www.congress.gov/amendment/119/house-amendment/73",
+   desc:"Cut $16.0M from the Southeast Crescent Regional Commission, redirected to the Spending Reduction Account."},
+  {label:"Amdt 70 to H.R. 4553", date:"2025-09-03", result:"Failed", crossovers:96, url:"https://www.congress.gov/amendment/119/house-amendment/70",
+   desc:"Cut $35M from the Title 17 clean-energy loan program, redirected to the Spending Reduction Account."},
+  {label:"Amdt 74 to H.R. 4553", date:"2025-09-04", result:"Failed", crossovers:95, url:"https://www.congress.gov/amendment/119/house-amendment/74",
+   desc:"Cut $2.1M from the Great Lakes Authority, redirected to the Spending Reduction Account."},
+  {label:"Amdt 13 (floor amendment)", date:"2025-03-27", result:"Failed", crossovers:92, url:"https://www.congress.gov/amendment/119/house-amendment/13",
+   desc:"Lowered the congressional gift-disclosure threshold from $50,000 to $1."},
+  {label:"Amdt 71 to H.R. 4553", date:"2025-09-03", result:"Failed", crossovers:92, url:"https://www.congress.gov/amendment/119/house-amendment/71",
+   desc:"Cut $13.3M from the Northern Border Regional Commission, redirected to the Spending Reduction Account."},
+  {label:"Amdt 75 to H.R. 4553", date:"2025-09-04", result:"Failed", crossovers:88, url:"https://www.congress.gov/amendment/119/house-amendment/75",
+   desc:"Struck all funding for the Office of Energy Efficiency and Renewable Energy."},
+  {label:"Amdt 72 to H.R. 4553", date:"2025-09-03", result:"Failed", crossovers:88, url:"https://www.congress.gov/amendment/119/house-amendment/72",
+   desc:"Cut $2.1M from the Southwest Border Regional Commission, redirected to the Spending Reduction Account."},
+  {label:"H.R. 3383", date:"2025-12-11", result:"Passed", crossovers:87, url:"https://www.congress.gov/bill/119/house-bill/3383",
+   desc:"Final passage: Incentivizing New Ventures and Economic Strength Through Capital Formation Act of 2025."},
+  {label:"Amdt 206 (floor amendment)", date:"2026-04-30", result:"Failed", crossovers:84, url:"https://www.congress.gov/amendment/119/house-amendment/206",
+   desc:"Added “soda” (sugary/artificially sweetened carbonated drinks) to a bill's list of ineligible items."},
+  {label:"Amdt 150 (floor amendment)", date:"2026-01-14", result:"Failed", crossovers:81, url:"https://www.congress.gov/amendment/119/house-amendment/150",
+   desc:"Eliminated all funding for the National Endowment for Democracy."},
+  {label:"Amdt 219 (floor amendment)", date:"2026-05-15", result:"Failed", crossovers:80, url:"https://www.congress.gov/amendment/119/house-amendment/219",
+   desc:"Redirected $481.8M from the NATO Security Investment Program to Military Construction, Defense-Wide."},
+];
+
+const maxRate = Math.ceil(Math.max(...data.map(d => d.rate)) / 5) * 5;
+const barChart = document.getElementById("bar-chart");
+const gridOverlay = document.getElementById("grid-overlay");
+
+data.forEach(d => {
+  const row = document.createElement("div");
+  row.className = "bar-row";
+  const color = d.bloc === "ideological" ? "var(--series-a)" : "var(--series-b)";
+  const widthPct = (d.rate / maxRate) * 100;
+  row.innerHTML = `
+    <div class="bar-name">${d.name} <span class="st">${d.state}</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:${widthPct}%; background:${color};"></div></div>
+    <div class="bar-value">${d.rate.toFixed(0)}%</div>
+  `;
+  barChart.insertBefore(row, gridOverlay);
+});
+
+const ticks = [0, maxRate/4, maxRate/2, (maxRate*3)/4, maxRate];
+ticks.forEach(t => {
+  const pct = (t / maxRate) * 100;
+  const line = document.createElement("div");
+  line.className = "grid-line";
+  line.style.left = pct + "%";
+  const tick = document.createElement("div");
+  tick.className = "grid-tick";
+  tick.style.left = pct + "%";
+  tick.textContent = t.toFixed(0) + "%";
+  gridOverlay.appendChild(line);
+  gridOverlay.appendChild(tick);
+});
+
+const tbody = document.getElementById("vote-table-body");
+votes.forEach(v => {
+  const tr = document.createElement("tr");
+  const tagClass = v.result === "Failed" ? "failed" : "passed";
+  tr.innerHTML = `
+    <td class="vote-cell">
+      <a class="bill-link vote-label" href="${v.url}" target="_blank" rel="noopener">${v.label}</a>
+      <span class="vote-desc">${v.desc}</span>
+    </td>
+    <td>${v.date}</td>
+    <td><span class="tag ${tagClass}">${v.result}</span></td>
+    <td class="num">${v.crossovers}</td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
+</body>
+</html>
