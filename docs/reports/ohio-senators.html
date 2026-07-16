@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ohio's senators, two very different money stories — Gov Data Insights</title>
+<link rel="stylesheet" href="../assets/report.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="site-name" href="../index.html">Gov Data Insights</a>
+  <span class="site-tagline">Explorations from api.data.gov</span>
+  <nav><a href="../index.html">&larr; All reports</a></nav>
+</header>
+
+<div class="report">
+  <div class="masthead">
+    <p class="kicker">Legislative Data Brief</p>
+    <h1>Ohio's senators, two very different money stories</h1>
+    <p class="dek">Bernie Moreno and Jon Husted vote together almost every time — the real contrast shows up in fundraising, and in what Moreno's own trading disclosures reveal about a bill he sponsored.</p>
+    <div class="byline">
+      <span>119th Congress, Ohio's 2 Senate seats</span><span class="sep">·</span>
+      <span>Source: senate.gov, api.congress.gov, efdsearch.senate.gov, FEC.gov</span><span class="sep">·</span>
+      <span>Compiled 2026-07-16</span>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat">
+      <div class="stat-value flag">99.5%</div>
+      <div class="stat-label">party-unity rate for both senators — tighter than any Ohio House Republican</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">$14.35M</div>
+      <div class="stat-label">Jon Husted's campaign receipts this cycle, more than 5x Bernie Moreno's</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">7</div>
+      <div class="stat-label">disclosed trades by Moreno, including a stock he sold while sponsoring a resolution banning senators from prediction-market trading</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">$7.04M</div>
+      <div class="stat-label">debt still owed by Moreno's campaign committee, largely self-loans from his 2024 race</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>Party-unity rate</h2>
+      <span class="section-note">share of sampled votes with Republican majority</span>
+    </div>
+    <p class="section-desc">Across a sample of 220 roll-call votes spanning both sessions of this Congress, Moreno and Husted agreed with the Senate Republican majority position 99.5% of the time each — a tighter margin than any Ohio House Republican in our companion brief. Both senators broke from the GOP majority on exactly one sampled vote, and it was the same one: a Rand Paul amendment to the FY2025 budget resolution, where the Republican conference itself split narrowly and Paul's position lost.</p>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-a)"></span>Republican</div>
+    </div>
+    <div class="chart-scroll">
+      <div class="bar-chart" id="unity-chart">
+        <div class="grid-overlay" id="unity-grid"></div>
+      </div>
+    </div>
+    <p class="callout">The one break for both: <a href="https://www.congress.gov/amendment/119th-congress/senate-amendment/999" target="_blank" rel="noopener">S.Amdt. 999</a>, Rand Paul's amendment to the FY2025 budget resolution (S.Con.Res. 7), rejected 24–76 on Feb 21, 2025. Moreno and Husted joined Paul's minority fiscal-hawk faction rather than the broader Senate GOP position — an intra-party split, not a break toward Democrats.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Legislative activity</h2>
+      <span class="section-note">bills and resolutions, this Congress</span>
+    </div>
+    <p class="section-desc">Husted has introduced substantially more legislation than Moreno despite comparable tenure — 42 sponsored bills to Moreno's 26, plus nearly three times the amendments. Neither senator has had a sponsored bill signed into law yet, typical for first-term senators this early in a Congress. Cosponsorship tells a similar story: Moreno has cosponsored more measures relative to his own sponsorship activity, suggesting a delegation-support role on colleagues' bills alongside his own agenda.</p>
+    <div class="chart-scroll">
+      <table>
+        <thead>
+          <tr><th>Senator</th><th style="text-align:right">Bills sponsored</th><th style="text-align:right">Amendments sponsored</th><th style="text-align:right">Cosponsored</th><th style="text-align:right">Became law</th></tr>
+        </thead>
+        <tbody id="leg-table-body"></tbody>
+      </table>
+    </div>
+    <p class="callout">Among Moreno's sponsored measures: <a href="https://www.congress.gov/amendment/119th-congress/senate-amendment/999" target="_blank" rel="noopener" style="color:inherit">S.Res. 708</a>, a resolution to amend Senate rules and prohibit senators from trading on prediction markets, agreed to by unanimous consent in April 2026. His own Periodic Transaction Reports (below) show a $100,001–$250,000 sale of eToro Group stock the following month — eToro is a trading platform, not a prediction market, so the resolution doesn't cover it, but the juxtaposition is notable given his broader pattern of trading through that same platform.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Stock trading activity</h2>
+      <span class="section-note">Periodic Transaction Reports, this Congress</span>
+    </div>
+    <p class="section-desc">Moreno has filed 7 disclosed transactions since taking office; Husted's spouse has filed one. Moreno's trading is unusual for the pattern we've seen in other delegations: rather than plain equities, most of his purchases are bank-issued structured notes — "autocallable contingent yield notes" from JPMorgan, Bank of America, Goldman Sachs, and a Canadian bank — a complex derivative product tied to index performance. He also disclosed a Bitcoin sale and, five months later, a much larger sale of eToro Group stock, the crypto/stock trading platform where that Bitcoin sale took place.</p>
+    <div class="chart-scroll">
+      <table>
+        <thead>
+          <tr><th>Senator</th><th>Date</th><th>Asset</th><th>Type</th><th style="text-align:right">Amount</th></tr>
+        </thead>
+        <tbody id="ptr-table-body"></tbody>
+      </table>
+    </div>
+    <p class="callout">Husted's only disclosed transaction is a spouse's $1,001–$15,000 purchase of Series A-3 preferred stock in Boxabl, a private Las Vegas-based home-construction startup — a non-public holding, not a tradeable security.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Trades vs. Banking Committee activity</h2>
+      <span class="section-note">Moreno only — sits on Senate Banking, Housing &amp; Urban Affairs</span>
+    </div>
+    <p class="section-desc">Moreno sits on the Senate Banking Committee, and several of his structured-note purchases are issued by major banks the committee oversees. We checked whether his 7 trade dates cluster near Banking Committee hearing dates more than chance would predict. They do, but only mildly — not enough to draw a conclusion from.</p>
+    <div class="chart-scroll">
+      <table>
+        <thead>
+          <tr><th>Trade date</th><th>Asset</th><th style="text-align:right">Nearest hearing</th><th style="text-align:right">Gap</th></tr>
+        </thead>
+        <tbody id="cluster-table-body"></tbody>
+      </table>
+    </div>
+    <p class="callout">Base rate check: given how often the Banking Committee meets (roughly every two weeks throughout Moreno's term), a <em>randomly chosen</em> date lands within 6 days of some hearing about 54% of the time by chance alone — a 10,000-trial simulation over his full tenure. Moreno's actual trades landed within 6 days 5 of 7 times (71%), and within 1 day 3 of 7 times (43%, vs. a 14% base rate for a random date). Both are elevated, but with only 7 trades total, this sample is too small to distinguish a real pattern from coincidence — it would take a larger disclosure history, or a look at his actual committee vote/hearing participation (not just hearing dates), to say more.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Campaign finance</h2>
+      <span class="section-note">current cycle, as of latest FEC filing</span>
+    </div>
+    <p class="section-desc">Husted's committee has raised more than five times what Moreno's has this cycle — $14.35M to $2.73M — and carries zero committee debt with $9.4M cash on hand. Moreno's committee, by contrast, still owes $7.04M, almost entirely self-loans from his expensive 2024 general election that he's repaying with current fundraising. Husted also draws a substantially higher individual-donor share (43.7% vs. 26.6%), meaning more of Moreno's money comes from PACs and party committees relative to individuals.</p>
+    <div class="chart-scroll">
+      <table>
+        <thead>
+          <tr><th>Senator</th><th style="text-align:right">Receipts</th><th style="text-align:right">Individual share</th><th style="text-align:right">Cash on hand</th><th style="text-align:right">Committee debt</th></tr>
+        </thead>
+        <tbody id="fec-table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="methodology">
+    <p><strong style="color:var(--text-secondary)">Methodology.</strong> Congress.gov's API does not cover Senate roll-call votes, so voting data here is pulled directly from senate.gov's public roll-call XML feed. Rather than fetch all 857 votes across both sessions of this Congress, we sampled every third vote (220 of 286 sampled votes returned valid member-level detail) and computed each senator's agreement rate with the Republican conference's majority position on each vote — this is an estimate, not an exhaustive count, and differs from the House party-unity brief's full 110-vote contested sample. Legislative activity is pulled via Congress.gov's <code>/member/{bioguideId}/sponsored-legislation</code> and <code>/cosponsored-legislation</code> endpoints. Stock-trade data comes directly from efdsearch.senate.gov's Periodic Transaction Report filings — unlike House PTRs, Senate reports are published as structured HTML rather than PDF, so no text-extraction was needed. Campaign finance figures are FEC principal-committee totals for the current election cycle (selected as the committee with the most recent active cycle, since both senators have more than one registered committee). Banking Committee hearing dates are pulled from banking.senate.gov's public hearings calendar; the base rate for the trades-vs-hearings check is a 10,000-trial Monte Carlo simulation of random dates across Moreno's full tenure (Jan 3, 2025 – Jul 16, 2026) against the actual hearing calendar.</p>
+    <p>This is a first-pass exploratory read, not a definitive study. The sampled-vote approach means the 99.5% party-unity figures are estimates with a margin of error; a full census of all 857 votes could shift them slightly. Both senators took office within the past two years, so "performance" here reflects an early, still-developing track record rather than a full term's body of work.</p>
+  </div>
+</div>
+
+<script>
+const unityData = [
+  {name:"Bernie Moreno", rate:99.5, n:220},
+  {name:"Jon Husted", rate:99.5, n:217},
+];
+
+const legData = [
+  {name:"Bernie Moreno", bills:26, amendments:7, cosponsored:191, becameLaw:0},
+  {name:"Jon Husted", bills:42, amendments:29, cosponsored:154, becameLaw:0},
+];
+
+const ptrData = [
+  {name:"Bernie Moreno", date:"2025-03-17", asset:"Mobile Infrastructure Corp (BEEP)", type:"Sale (Full)", low:15001, high:50000},
+  {name:"Bernie Moreno", date:"2025-04-02", asset:"JPMorgan Chase Financial autocallable note", type:"Purchase", low:1001, high:15000},
+  {name:"Bernie Moreno", date:"2025-10-22", asset:"GS Finance Corp. autocallable note", type:"Purchase", low:1001, high:15000},
+  {name:"Bernie Moreno", date:"2025-10-31", asset:"Bitcoin (via eToro)", type:"Sale (Full)", low:1001, high:15000},
+  {name:"Bernie Moreno", date:"2025-12-17", asset:"Canadian Imperial Bank of Commerce autocallable note", type:"Purchase", low:1001, high:15000},
+  {name:"Bernie Moreno", date:"2025-12-19", asset:"BofA Finance LLC autocallable note", type:"Purchase", low:1001, high:15000},
+  {name:"Bernie Moreno", date:"2026-05-06", asset:"eToro Group Ltd. (ETOR)", type:"Sale (Full)", low:100001, high:250000},
+  {name:"Jon Husted (spouse)", date:"2025-05-06", asset:"Boxabl Series A-3 preferred stock", type:"Purchase", low:1001, high:15000},
+];
+
+const fecData = [
+  {name:"Jon Husted", receipts:14350624, indivPct:43.7, cash:9418818, debt:0},
+  {name:"Bernie Moreno", receipts:2734381, indivPct:26.6, cash:639133, debt:7039894},
+];
+
+const clusterData = [
+  {date:"2025-03-17", asset:"Mobile Infrastructure Corp (BEEP) sale", hearing:"2025-03-12", hearingTitle:"Housing Roadblocks hearing", gap:-5},
+  {date:"2025-04-02", asset:"JPMorgan Chase autocallable note", hearing:"2025-03-27", hearingTitle:"Nomination Hearing", gap:-6},
+  {date:"2025-10-22", asset:"GS Finance Corp. autocallable note", hearing:"2025-10-21", hearingTitle:"Innovation in U.S. Housing hearing", gap:-1},
+  {date:"2025-10-31", asset:"Bitcoin (via eToro) sale", hearing:"2025-10-30", hearingTitle:"Nomination Hearing", gap:-1},
+  {date:"2025-12-17", asset:"CIBC autocallable note", hearing:"2025-12-16", hearingTitle:"Ensuring Fair Access to Banking hearing", gap:-1},
+  {date:"2025-12-19", asset:"BofA Finance autocallable note", hearing:"2025-12-16", hearingTitle:"Ensuring Fair Access to Banking hearing", gap:-3},
+  {date:"2026-05-06", asset:"eToro Group Ltd. (ETOR) sale", hearing:"2026-04-21", hearingTitle:"Nomination Hearing", gap:-15},
+];
+
+// ---- Unity bar chart ----
+const maxRate = 100;
+const unityChart = document.getElementById("unity-chart");
+const unityGrid = document.getElementById("unity-grid");
+unityData.forEach(d => {
+  const row = document.createElement("div");
+  row.className = "bar-row";
+  const widthPct = (d.rate / maxRate) * 100;
+  row.innerHTML = `
+    <div class="bar-name">${d.name} <span class="st">R-OH</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:${widthPct}%; background:var(--series-a);"></div></div>
+    <div class="bar-value">${d.rate.toFixed(1)}%</div>
+  `;
+  unityChart.insertBefore(row, unityGrid);
+});
+[0,25,50,75,100].forEach(t => {
+  const pct = (t / maxRate) * 100;
+  const line = document.createElement("div");
+  line.className = "grid-line";
+  line.style.left = pct + "%";
+  const tick = document.createElement("div");
+  tick.className = "grid-tick";
+  tick.style.left = pct + "%";
+  tick.textContent = t + "%";
+  unityGrid.appendChild(line);
+  unityGrid.appendChild(tick);
+});
+
+// ---- Legislative activity table ----
+const legBody = document.getElementById("leg-table-body");
+legData.forEach(d => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${d.name}</td>
+    <td class="num">${d.bills}</td>
+    <td class="num">${d.amendments}</td>
+    <td class="num">${d.cosponsored}</td>
+    <td class="num">${d.becameLaw}</td>
+  `;
+  legBody.appendChild(tr);
+});
+
+// ---- PTR table ----
+const fmtMoney = n => n ? `$${n.toLocaleString()}` : "—";
+const ptrBody = document.getElementById("ptr-table-body");
+ptrData.forEach(d => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${d.name}</td>
+    <td>${d.date}</td>
+    <td>${d.asset}</td>
+    <td>${d.type}</td>
+    <td class="num">${fmtMoney(d.low)} – ${fmtMoney(d.high)}</td>
+  `;
+  ptrBody.appendChild(tr);
+});
+
+// ---- FEC table ----
+const fecBody = document.getElementById("fec-table-body");
+fecData.forEach(d => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${d.name}</td>
+    <td class="num">${fmtMoney(d.receipts)}</td>
+    <td class="num">${d.indivPct}%</td>
+    <td class="num">${fmtMoney(d.cash)}</td>
+    <td class="num">${d.debt ? fmtMoney(d.debt) : "—"}</td>
+  `;
+  fecBody.appendChild(tr);
+});
+
+// ---- Hearing-proximity cluster table ----
+const clusterBody = document.getElementById("cluster-table-body");
+clusterData.forEach(d => {
+  const tr = document.createElement("tr");
+  const flag = Math.abs(d.gap) <= 1 ? ' style="color:var(--series-a);font-weight:600"' : "";
+  tr.innerHTML = `
+    <td>${d.date}</td>
+    <td>${d.asset}</td>
+    <td class="num">${d.hearing} — ${d.hearingTitle}</td>
+    <td class="num"${flag}>${Math.abs(d.gap)}d</td>
+  `;
+  clusterBody.appendChild(tr);
+});
+</script>
+</body>
+</html>
