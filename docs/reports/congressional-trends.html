@@ -198,7 +198,11 @@ function renderLineChart(container, opts) {
 }
 
 const trendContainer = document.getElementById("trend-charts");
-const xLabels = bipartisanData.map(d => `${d.congress}th`);
+const xLabels = bipartisanData.map(d => {
+  const p = productivityData.find(p => p.congress === d.congress);
+  const startYear = p.years.slice(0, 4);
+  return `${d.congress}th, ${startYear}`;
+});
 
 renderLineChart(trendContainer, {
   title: "Bipartisan agreement rate (House & Senate)",
