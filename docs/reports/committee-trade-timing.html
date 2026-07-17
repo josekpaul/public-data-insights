@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Do committee members trade around their own hearings? — Gov Data Insights</title>
+<link rel="stylesheet" href="../assets/report.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="site-name" href="../index.html">Gov Data Insights</a>
+  <span class="site-tagline">Explorations from api.data.gov</span>
+  <nav><a href="../index.html">&larr; All reports</a></nav>
+</header>
+
+<div class="report">
+  <div class="masthead">
+    <p class="kicker">Legislative Data Brief</p>
+    <h1>Do committee members trade around their own hearings?</h1>
+    <p class="dek">We scaled up a single-senator finding to 42 House members who sit on Financial Services, Energy &amp; Commerce, or Armed Services and also disclosed stock trades. Across nearly 1,000 trade events, all three committees show trading mildly but consistently clustered near their own hearing dates — more than chance alone would predict, though not in a way that points to any particular hearing or informational edge.</p>
+    <div class="byline">
+      <span>119th Congress, House Financial Services / Energy &amp; Commerce / Armed Services</span><span class="sep">·</span>
+      <span>Source: Clerk of the House (bulk Financial Disclosures), api.congress.gov, clerk.house.gov committee rosters</span><span class="sep">·</span>
+      <span>Compiled 2026-07-16</span>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat">
+      <div class="stat-value flag">947</div>
+      <div class="stat-label">distinct trade events by committee members, after collapsing same-day multi-asset filings into single events</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">42</div>
+      <div class="stat-label">of 164 seats across the three committees belong to a member who filed at least one stock trade disclosure</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">+13pp</div>
+      <div class="stat-label">average elevation above chance in same/next-day trade-hearing clustering, across all three committees</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">0</div>
+      <div class="stat-label">trades found that plausibly anticipated a specific hearing's subject matter — the pattern is timing-only</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>Why we scaled this up</h2>
+    </div>
+    <p class="section-desc">Our <a href="ohio-senators.html">Ohio senators report</a> checked whether Bernie Moreno's 7 disclosed trades clustered near Senate Banking Committee hearings. They did, mildly — but 7 trades is too small a sample to trust. The obvious fix is more data: pull every House member who (a) sits on a committee whose hearings plausibly move markets, and (b) has filed Periodic Transaction Reports, then run the same proximity check at scale. We picked three committees whose jurisdiction most directly touches tradeable sectors — Financial Services (banks, securities, housing finance), Energy &amp; Commerce (health, telecom, energy), and Armed Services (defense contractors) — and matched their combined 164 seats against the House Clerk's bulk financial-disclosure index for 2025 and 2026.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Trade-hearing proximity, by committee</h2>
+      <span class="section-note">share of trade events within 1 day of a hearing, observed vs. chance</span>
+    </div>
+    <p class="section-desc">For each committee, we compared how often members' actual trade dates fell within 1 day of one of that committee's hearings or markups against a 10,000-trial Monte Carlo simulation of random dates across the same members' tenure — the same base-rate method used in the Ohio senators report, now applied to hundreds of trades instead of 7. All three committees land above their simulated chance rate.</p>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-a)"></span>Observed</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-b)"></span>Chance (simulated)</div>
+    </div>
+    <div class="chart-scroll">
+      <div class="bar-chart" id="prox-chart">
+        <div class="grid-overlay" id="prox-grid"></div>
+      </div>
+    </div>
+    <p class="callout">The gap is real but modest, and it doesn't grow much at a wider 3-day window — Energy &amp; Commerce's 3-day observed rate (59.5%) is essentially identical to its chance rate (59.1%). That pattern is more consistent with committees simply meeting often enough that <em>any</em> trading activity lands "near" a hearing somewhat more than a naive random-date model expects (hearings aren't evenly spread across the calendar — they cluster in session weeks), than with members trading on advance knowledge of specific hearing content.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>A crucial correction: counting trades, not line items</h2>
+    </div>
+    <p class="section-desc">Our first pass at this analysis counted every line item in every PTR filing as an independent "trade" — and got a much noisier, misleading result. Two members (Reps. Lisa McClain and Gilbert Cisneros) file enormous multi-asset disclosures, sometimes 300 securities in a single filing on a single date, almost certainly from managed brokerage accounts rebalancing automatically. Counting each security as a separate trial made their single rebalancing events look like hundreds of independently-timed trading decisions, which inflated the apparent signal. We fixed this by collapsing same-member, same-date filings into one trade event before computing proximity — 4,983 line items became 947 real trade events. The finding above uses the corrected count.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Where the signal concentrates</h2>
+      <span class="section-note">members with 3+ trade events, share within 1 day of a hearing</span>
+    </div>
+    <p class="section-desc">The elevated rate isn't evenly spread — a handful of members account for most of it, but not through obviously suspicious volume. Financial Services Chairman French Hill's 3 trade events show up near hearings at a higher-than-chance rate, though his sample is too small to read into. Larger, more stable samples like Rep. Josh Gottheimer (140 events, 48% within 1 day) and Rep. Scott Peters (94 events, 49%) show the pattern holding up at real scale.</p>
+    <div class="chart-scroll">
+      <table>
+        <thead>
+          <tr><th>Member</th><th>Committee</th><th style="text-align:right">Trade events</th><th style="text-align:right">Within 1 day of a hearing</th></tr>
+        </thead>
+        <tbody id="member-table-body"></tbody>
+      </table>
+    </div>
+    <p class="callout">The single largest trade event landing near a hearing was Rep. John Rose's (R-TN) June 3, 2025 disclosure of up to $15.5M in Alphabet stock and other holdings, filed one day after a Financial Services hearing on digital assets policy — a broad full-committee hearing with no obvious connection to Alphabet specifically. We checked every high-dollar trade near a hearing for a topical match to that hearing's subject and found none; the clustering is a timing pattern, not a subject-matter one.</p>
+  </section>
+
+  <div class="methodology">
+    <p><strong style="color:var(--text-secondary)">Methodology.</strong> Committee rosters for Financial Services, Energy &amp; Commerce, and Armed Services were pulled from clerk.house.gov's committee profile pages (current as of July 2026). We matched these 164 seats against the House Clerk's bulk Financial Disclosure index (2025FD.xml and 2026FD.xml) by last name and state, keeping only "P" (Periodic Transaction Report) filing types, yielding 303 filings across 50 members. PDF text was extracted with pypdf and parsed with the same regex pipeline built for our Ohio delegation report; 36 filings (mostly Rep. Ro Khanna's, which are scanned images rather than text PDFs) could not be parsed and are excluded, so his trading activity is undercounted here. Hearing and markup dates came from Congress.gov's <code>/committee-meeting/119/house/{eventId}</code> endpoint, filtered to system codes starting <code>hsba</code> (Financial Services), <code>hsif</code> (Energy &amp; Commerce), and <code>hsas</code> (Armed Services), covering both full-committee and subcommittee sessions. The Monte Carlo base rate for each committee simulates 10,000 random dates across Jan 3, 2025 – Jul 16, 2026 against that committee's actual hearing calendar.</p>
+    <p>This remains an exploratory pattern-check, not evidence of insider trading or improper conduct. We did not verify whether flagged trades were placed by the member personally, a spouse, or a discretionary account manager with no member input — PTR filings often don't distinguish clearly, and many members use blind or managed trusts precisely to avoid this kind of judgment call. A same-day or next-day proximity to a hearing is also not evidence the member had advance knowledge of anything discussed there; committees hold hearings often enough, and members trade often enough, that some baseline overlap is expected, which is exactly what the Monte Carlo comparison is designed to account for. Reading any individual member's trades into this without that context would be unfair to them.</p>
+  </div>
+</div>
+
+<script>
+const proxData = [
+  {name:"Financial Services", observed:47.2, chance:30.1, n:468},
+  {name:"Energy and Commerce", observed:44.9, chance:30.4, n:227},
+  {name:"Armed Services", observed:24.2, chance:16.7, n:252},
+];
+
+const memberData = [
+  {name:"John W. Rose", committee:"Financial Services", n:3, pct:100},
+  {name:"Maria Elvira Salazar", committee:"Financial Services", n:20, pct:65},
+  {name:"J. French Hill", committee:"Financial Services", n:3, pct:33},
+  {name:"Cleo Fields", committee:"Financial Services", n:56, pct:55},
+  {name:"Josh Gottheimer", committee:"Financial Services", n:140, pct:48},
+  {name:"Lisa C. McClain", committee:"Financial Services", n:47, pct:49},
+  {name:"Tim Moore", committee:"Financial Services", n:149, pct:44},
+  {name:"Neal P. Dunn", committee:"Energy and Commerce", n:5, pct:60},
+  {name:"August Pfluger", committee:"Energy and Commerce", n:7, pct:57},
+  {name:"Thomas H. Kean, Jr.", committee:"Energy and Commerce", n:56, pct:50},
+  {name:"Scott H. Peters", committee:"Energy and Commerce", n:94, pct:49},
+  {name:"Rick W. Allen", committee:"Energy and Commerce", n:23, pct:30},
+  {name:"John J. McGuire III", committee:"Armed Services", n:12, pct:33},
+  {name:"William R. Keating", committee:"Armed Services", n:22, pct:27},
+  {name:"Gilbert Ray Cisneros, Jr.", committee:"Armed Services", n:196, pct:23},
+];
+
+// ---- Proximity bar chart ----
+const maxRate = 60;
+const proxChart = document.getElementById("prox-chart");
+const proxGrid = document.getElementById("prox-grid");
+proxData.forEach(d => {
+  const row = document.createElement("div");
+  row.className = "bar-row";
+  const obsWidth = (d.observed / maxRate) * 100;
+  const chanceWidth = (d.chance / maxRate) * 100;
+  row.innerHTML = `
+    <div class="bar-name">${d.name} <span class="st">(n=${d.n})</span></div>
+    <div class="bar-track">
+      <div class="bar-fill" style="width:${obsWidth}%; background:var(--series-a)"></div>
+      <div class="bar-value" style="left:calc(${obsWidth}% + 6px)">${d.observed}%</div>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" style="width:${chanceWidth}%; background:var(--series-b)"></div>
+      <div class="bar-value" style="left:calc(${chanceWidth}% + 6px)">${d.chance}% chance</div>
+    </div>
+  `;
+  proxChart.appendChild(row);
+});
+[0,15,30,45,60].forEach(t => {
+  const pct = (t / maxRate) * 100;
+  const line = document.createElement("div");
+  line.className = "grid-line";
+  line.style.left = pct + "%";
+  proxGrid.appendChild(line);
+  const tick = document.createElement("div");
+  tick.className = "grid-tick";
+  tick.style.left = pct + "%";
+  tick.textContent = t + "%";
+  proxGrid.appendChild(tick);
+});
+
+// ---- Member table ----
+const memberBody = document.getElementById("member-table-body");
+memberData.sort((a,b) => b.pct - a.pct);
+memberData.forEach(d => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${d.name}</td>
+    <td class="num">${d.committee}</td>
+    <td class="num">${d.n}</td>
+    <td class="num">${d.pct}%</td>
+  `;
+  memberBody.appendChild(tr);
+});
+</script>
+
+</body>
+</html>
