@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ohio's Statehouse: consensus by default — Gov Data Insights</title>
+<link rel="stylesheet" href="../assets/report.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-945HMWM05B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-945HMWM05B');
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="site-name" href="../index.html">Gov Data Insights</a>
+  <span class="site-tagline">Explorations from api.data.gov</span>
+  <nav><a href="../index.html">&larr; All reports</a></nav>
+</header>
+
+<div class="report">
+  <div class="masthead">
+    <p class="kicker">Legislative Data Brief</p>
+    <h1>Ohio's Statehouse: consensus by default</h1>
+    <p class="dek">Congress splits along party lines on most contested votes. Ohio's General Assembly doesn't — most floor votes pass unanimously, and even the sharpest disagreements rarely break cleanly by party.</p>
+    <div class="byline">
+      <span>136th General Assembly, 2025&ndash;2026 Regular Session</span><span class="sep">·</span>
+      <span>Source: LegiScan API</span><span class="sep">·</span>
+      <span>Compiled 2026-07-17</span>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat">
+      <div class="stat-value flag">173 / 261</div>
+      <div class="stat-label">floor votes (66%) passed unanimously across both chambers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">15%</div>
+      <div class="stat-label">of floor votes split cleanly along party lines, House and Senate alike</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">R 60 / D 34</div>
+      <div class="stat-label">House vote margin on the FY2026&ndash;27 state budget, the session's clearest party-line fight</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">134</div>
+      <div class="stat-label">members (99 House, 33 Senate, minus vacancies) with a floor voting record analyzed</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>How floor votes break down, by chamber</h2>
+      <span class="section-note">share of final-passage votes, House vs. Senate</span>
+    </div>
+    <p class="section-desc">We classified every House- or Senate-wide final-passage roll call this session into three buckets: unanimous (no recorded opposition), bipartisan-split (opposition exists but doesn't divide along party lines), and party-line (a majority of Republicans opposed a majority of Democrats, or vice versa). Both chambers land on party lines about as often — but the Senate is far more likely to be unanimous, while the House sees more genuine bipartisan disagreement that still isn't a party split.</p>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--text-muted)"></span>Unanimous</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-b)"></span>Bipartisan split (non-unanimous, not party-line)</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-a)"></span>Party-line</div>
+    </div>
+    <div class="chart-scroll">
+      <div class="bar-chart" id="chamber-chart">
+        <div class="grid-overlay" id="chamber-grid"></div>
+      </div>
+    </div>
+    <p class="callout">The Senate's smaller size (33 members vs. 99) likely helps: fewer members means fewer marginal seats and less incentive to force a floor fight over a bill leadership could otherwise negotiate down before it reaches a vote.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Who breaks from their party most often</h2>
+      <span class="section-note">min. 20 votes analyzed &middot; both parties represented</span>
+    </div>
+    <p class="section-desc">Share of final-passage votes where the member voted against their own party's majority position. Unlike Congress, where recent House GOP defectors vastly outnumber Democratic ones, Ohio's list is a mix of both parties — including Jason Stephens, the House's own former Speaker, who lost a leadership fight to open the session and has broken from the Republican caucus majority ever since.</p>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-a)"></span>Republican</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-b)"></span>Democrat</div>
+    </div>
+    <div class="chart-scroll">
+      <div class="bar-chart" id="bar-chart">
+        <div class="grid-overlay" id="grid-overlay"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Most party-splitting votes</h2>
+      <span class="section-note">by total crossover votes, both parties combined</span>
+    </div>
+    <p class="section-desc">Ranked by total members voting against their own party's majority. Property tax and school-funding bills dominate this list — the one recurring subject where Ohio Democrats split internally rather than voting as a bloc, since the impact varies sharply by district.</p>
+    <div class="chart-scroll">
+      <table>
+        <thead>
+          <tr><th>Bill</th><th>Date</th><th>Vote</th><th style="text-align:right">Crossover votes</th></tr>
+        </thead>
+        <tbody id="vote-table-body"></tbody>
+      </table>
+    </div>
+    <p class="callout">The single biggest crossover vote, <a href="https://legiscan.com/OH/bill/HB129/2025" target="_blank" rel="noopener">HB129</a> (limiting school districts' ability to reallocate property tax millage), split House Democrats 19&ndash;14 while Republicans held together 62&ndash;2 &mdash; a pattern that repeats across several property-tax and school-funding bills this session, including HB309, HB186, and HB57.</p>
+  </section>
+
+  <div class="methodology">
+    <p><strong style="color:var(--text-secondary)">Methodology.</strong> We pulled every bill LegiScan marked as passed/enacted (status 4) in the 136th General Assembly's 2025&ndash;2026 regular session &mdash; 1,007 bills &mdash; via the LegiScan API's <code>getBill</code> operation, then extracted all 577 unique roll calls referenced across them. Of those, 261 were House- or Senate-wide final-passage or adoption votes with at least 10 recorded participants; committee votes, procedural motions, and re-referrals were excluded. Each roll call's per-member votes (<code>getRollCall</code>) were joined against the session's full member roster (<code>getSessionPeople</code>) to attach party affiliation. A vote is "party-line" when a majority of voting Republicans and a majority of voting Democrats landed on opposite sides; a member's "crossover" is any Yea/Nay vote against their own party's majority position on that roll call. Member unity rates require at least 20 qualifying votes.</p>
+    <p>This is a single-session snapshot of the 136th General Assembly (through July 2026), not a multi-session trend &mdash; a bill with no recorded roll call (voice vote, unanimous consent, or a version LegiScan didn't capture a division on) isn't represented here, which is why only 159 of 1,007 passed bills contributed a roll call at all. Independent and vacant seats are excluded from party-majority calculations.</p>
+  </div>
+</div>
+
+<script>
+const chamberData = [
+  {name:"House", unanimous:76, bipartisan:39, partyLine:21, total:136},
+  {name:"Senate", unanimous:97, bipartisan:9, partyLine:19, total:125},
+];
+
+const memberData = [
+  {name:"Ron Ferguson", party:"R", chamber:"H", district:"HD-096", rate:15.5, withParty:93, total:110},
+  {name:"Michelle Teska", party:"R", chamber:"H", district:"HD-055", rate:14.5, withParty:106, total:124},
+  {name:"Jason Stephens", party:"R", chamber:"H", district:"HD-093", rate:12.2, withParty:115, total:131},
+  {name:"Tristan Rader", party:"D", chamber:"H", district:"HD-013", rate:12.0, withParty:103, total:117},
+  {name:"Juanita Brent", party:"D", chamber:"H", district:"HD-018", rate:10.2, withParty:97, total:108},
+  {name:"Levi Dean", party:"R", chamber:"H", district:"HD-071", rate:10.2, withParty:114, total:127},
+  {name:"Chris Glassburn", party:"D", chamber:"H", district:"HD-015", rate:9.7, withParty:121, total:134},
+  {name:"Jennifer Gross", party:"R", chamber:"H", district:"HD-045", rate:9.2, withParty:108, total:119},
+  {name:"Louis Blessing", party:"R", chamber:"S", district:"SD-008", rate:8.8, withParty:114, total:125},
+  {name:"Desiree Tims", party:"D", chamber:"H", district:"HD-038", rate:8.7, withParty:105, total:115},
+  {name:"Mark Sigrist", party:"D", chamber:"H", district:"HD-010", rate:8.0, withParty:115, total:125},
+  {name:"Munira Abdullahi", party:"D", chamber:"H", district:"HD-009", rate:7.8, withParty:107, total:116},
+  {name:"Derrick Hall", party:"D", chamber:"H", district:"HD-034", rate:7.8, withParty:106, total:115},
+  {name:"Karen Brownlee", party:"D", chamber:"H", district:"HD-028", rate:7.6, withParty:122, total:132},
+];
+
+const votes = [
+  {label:"HB129", date:"2025-10-08", result:"Passed", crossovers:16, url:"https://legiscan.com/OH/bill/HB129/2025",
+   desc:"Limit ability to reallocate certain school property tax millage. R 62–2, D 19–14."},
+  {label:"HB20", date:"2025-06-18", result:"Passed", crossovers:15, url:"https://legiscan.com/OH/bill/HB20/2025",
+   desc:"Prohibit harassing or impeding an emergency service responder. R 64–0, D 15–18."},
+  {label:"HB57", date:"2025-10-01", result:"Passed", crossovers:15, url:"https://legiscan.com/OH/bill/HB57/2025",
+   desc:"Regards school policies on administering overdose reversal drugs. R 61–0, D 15–18."},
+  {label:"HB309", date:"2025-10-08", result:"Passed", crossovers:14, url:"https://legiscan.com/OH/bill/HB309/2025",
+   desc:"Regards budget commissions, property tax, and certain funds. R 63–0, D 14–19."},
+  {label:"HB105", date:"2025-11-19", result:"Passed", crossovers:14, url:"https://legiscan.com/OH/bill/HB105/2025",
+   desc:"Revise non-recourse litigation funding agreement regulations. R 60–3, D 16–11."},
+  {label:"SB33", date:"2025-04-02", result:"Passed", crossovers:13, url:"https://legiscan.com/OH/bill/SB33/2025",
+   desc:"Allow employers to post certain labor law notices on the internet. R 62–0, D 13–20."},
+  {label:"HB186", date:"2025-11-19", result:"Passed", crossovers:12, url:"https://legiscan.com/OH/bill/HB186/2025",
+   desc:"Regards school district property taxes, school funding formula. R 61–1, D 11–14."},
+  {label:"SB19", date:"2026-06-09", result:"Passed", crossovers:12, url:"https://legiscan.com/OH/bill/SB19/2025",
+   desc:"Regards academic intervention, math improvement and intervention. R 62–1, D 22–11."},
+  {label:"HB20", date:"2026-06-09", result:"Passed", crossovers:12, url:"https://legiscan.com/OH/bill/HB20/2025",
+   desc:"Prohibit harassing or impeding an emergency service responder (Senate concurrence). R 62–0, D 21–12."},
+  {label:"HB105", date:"2026-06-10", result:"Passed", crossovers:12, url:"https://legiscan.com/OH/bill/HB105/2025",
+   desc:"Revise non-recourse litigation funding agreement regulations (Senate concurrence). R 62–1, D 20–11."},
+];
+
+// ---- Chamber stacked bar (unanimous / bipartisan / party-line) ----
+const chamberChart = document.getElementById("chamber-chart");
+const chamberGrid = document.getElementById("chamber-grid");
+chamberData.forEach(d => {
+  const row = document.createElement("div");
+  row.className = "bar-row";
+  const uPct = (d.unanimous / d.total) * 100;
+  const bPct = (d.bipartisan / d.total) * 100;
+  const pPct = (d.partyLine / d.total) * 100;
+  row.innerHTML = `
+    <div class="bar-name">${d.name} <span class="st">(n=${d.total})</span></div>
+    <div class="bar-track" style="display:flex; overflow:hidden; border-radius:3px;">
+      <div style="width:${uPct}%; background:var(--text-muted);" title="Unanimous: ${d.unanimous}"></div>
+      <div style="width:${bPct}%; background:var(--series-b); margin-left:2px;" title="Bipartisan split: ${d.bipartisan}"></div>
+      <div style="width:${pPct}%; background:var(--series-a); margin-left:2px;" title="Party-line: ${d.partyLine}"></div>
+    </div>
+    <div class="bar-value">${uPct.toFixed(0)}% / ${bPct.toFixed(0)}% / ${pPct.toFixed(0)}%</div>
+  `;
+  chamberChart.appendChild(row);
+});
+[0,25,50,75,100].forEach(t => {
+  const line = document.createElement("div");
+  line.className = "grid-line";
+  line.style.left = t + "%";
+  chamberGrid.appendChild(line);
+  const tick = document.createElement("div");
+  tick.className = "grid-tick";
+  tick.style.left = t + "%";
+  tick.textContent = t + "%";
+  chamberGrid.appendChild(tick);
+});
+
+// ---- Member defection bar chart ----
+const maxRate = Math.ceil(Math.max(...memberData.map(d => d.rate)) / 5) * 5;
+const barChart = document.getElementById("bar-chart");
+const gridOverlay = document.getElementById("grid-overlay");
+
+memberData.forEach(d => {
+  const row = document.createElement("div");
+  row.className = "bar-row";
+  const color = d.party === "R" ? "var(--series-a)" : "var(--series-b)";
+  const widthPct = (d.rate / maxRate) * 100;
+  row.innerHTML = `
+    <div class="bar-name">${d.name} <span class="st">${d.party}-${d.chamber}, ${d.district}</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:${widthPct}%; background:${color};"></div></div>
+    <div class="bar-value">${d.rate.toFixed(1)}%</div>
+  `;
+  barChart.insertBefore(row, gridOverlay);
+});
+
+const ticks = [0, maxRate/4, maxRate/2, (maxRate*3)/4, maxRate];
+ticks.forEach(t => {
+  const pct = (t / maxRate) * 100;
+  const line = document.createElement("div");
+  line.className = "grid-line";
+  line.style.left = pct + "%";
+  const tick = document.createElement("div");
+  tick.className = "grid-tick";
+  tick.style.left = pct + "%";
+  tick.textContent = t.toFixed(0) + "%";
+  gridOverlay.appendChild(line);
+  gridOverlay.appendChild(tick);
+});
+
+// ---- Vote table ----
+const tbody = document.getElementById("vote-table-body");
+votes.forEach(v => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td class="vote-cell">
+      <a class="bill-link vote-label" href="${v.url}" target="_blank" rel="noopener">${v.label}</a>
+      <span class="vote-desc">${v.desc}</span>
+    </td>
+    <td>${v.date}</td>
+    <td><span class="tag passed">${v.result}</span></td>
+    <td class="num">${v.crossovers}</td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
+
+</body>
+</html>

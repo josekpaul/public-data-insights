@@ -382,10 +382,26 @@ a.bill-link:hover { border-bottom-color: currentColor; }
   max-width: 62ch;
 }
 
-.report-grid {
+.report-section {
   max-width: 760px;
   margin: 0 auto;
-  padding: 32px 28px 80px;
+  padding: 32px 28px 0;
+}
+.report-section:last-of-type {
+  padding-bottom: 80px;
+}
+.report-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.report-grid {
   display: flex;
   flex-direction: column;
   gap: 1px;
