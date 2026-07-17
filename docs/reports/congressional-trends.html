@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Congress's disappearing middle — Gov Data Insights</title>
+<link rel="stylesheet" href="../assets/report.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="site-name" href="../index.html">Gov Data Insights</a>
+  <span class="site-tagline">Explorations from api.data.gov</span>
+  <nav><a href="../index.html">&larr; All reports</a></nav>
+</header>
+
+<div class="report">
+  <div class="masthead">
+    <p class="kicker">Legislative Data Brief</p>
+    <h1>Congress's disappearing middle</h1>
+    <p class="dek">Five Congresses of roll-call votes show party-line voting climbing and bipartisan agreement shrinking — and this Congress, the Senate broke from its own recent pattern entirely. Meanwhile, the two chambers are enacting a shrinking share of the bills they introduce.</p>
+    <div class="byline">
+      <span>115th&ndash;119th Congress, House &amp; Senate recorded votes</span><span class="sep">·</span>
+      <span>Source: api.congress.gov, clerk.house.gov, senate.gov</span><span class="sep">·</span>
+      <span>Compiled 2026-07-17</span>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat">
+      <div class="stat-value flag">77.7%</div>
+      <div class="stat-label">of 119th Congress Senate votes were party-line — nearly double the 115th Congress rate (41.1%)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">6.9%</div>
+      <div class="stat-label">of 119th Senate votes saw both parties' majorities agree, down from 39.7% two Congresses ago</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">0.59%</div>
+      <div class="stat-label">share of bills introduced this Congress that have become law so far — a fifth of the 115th Congress's rate</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">17,575</div>
+      <div class="stat-label">bills introduced this Congress, near an all-time high, chasing a shrinking pool of enacted laws</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>Bipartisanship and output, side by side</h2>
+      <span class="section-note">indexed to each Congress, same x-axis</span>
+    </div>
+    <p class="section-desc">Two different measures on two different scales, so they're shown as separate charts rather than one chart with two y-axes (which invites reading a coincidence into how the lines happen to cross). Lined up by Congress, the shapes still tell a connected story: as bipartisan agreement fell, so did the rate at which introduced bills became law.</p>
+    <div class="line-charts" id="trend-charts"></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Party-line voting, by Congress</h2>
+      <span class="section-note">share of votes where both parties' majorities opposed each other, &le;10% crossover each side</span>
+    </div>
+    <p class="section-desc">A "party-line vote" here means both parties voted close to unanimously (at most 1 in 10 crossing over) and landed on opposite sides. The House has moved in a narrow band for a decade. The Senate held a similar band through the 118th Congress — then jumped sharply in the 119th, to a rate higher than the House's.</p>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-a)"></span>House</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-b)"></span>Senate</div>
+    </div>
+    <div class="chart-scroll">
+      <div class="bar-chart" id="partyline-chart">
+        <div class="grid-overlay" id="partyline-grid"></div>
+      </div>
+    </div>
+    <p class="callout">The Senate's 119th-Congress figure isn't a nominations artifact. Confirming votes (typically lopsided along party lines under the current cloture rules) actually make up a <em>smaller</em> share of this Congress's sample (24.5%) than in any prior Congress in this dataset (30&ndash;35%). Excluding nominations entirely, the party-line rate for Senate legislative votes alone is 79.0% this Congress, versus 39&ndash;51% in the four Congresses before it.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Bipartisan agreement, by Congress</h2>
+      <span class="section-note">share of votes where both parties' majorities landed on the same side</span>
+    </div>
+    <p class="section-desc">The mirror image of the chart above: how often do the two parties' majorities actually agree? The Senate's traditional advantage over the House &mdash; built on the filibuster forcing 60-vote coalitions and a smaller, more collegial chamber &mdash; has been eroding since the 117th Congress and nearly disappeared in the 119th.</p>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-a)"></span>House</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--series-b)"></span>Senate</div>
+    </div>
+    <div class="chart-scroll">
+      <div class="bar-chart" id="bipartisan-chart">
+        <div class="grid-overlay" id="bipartisan-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Legislative output</h2>
+      <span class="section-note">bills introduced vs. enacted into law, both chambers combined</span>
+    </div>
+    <p class="section-desc">Bill introductions have climbed steadily &mdash; members file more legislation each Congress &mdash; while the number that actually becomes law has fallen. The result is a steadily shrinking enactment rate: roughly 1 in 30 introduced bills became law in the 115th Congress, versus roughly 1 in 170 so far in the 119th. The 119th Congress's figures are incomplete (through July 2026, roughly 75% into its term) and will rise somewhat by its close, but even doubled they would not approach the 115th Congress's rate.</p>
+    <div class="chart-scroll">
+      <table>
+        <thead>
+          <tr><th>Congress</th><th>Years</th><th style="text-align:right">Bills introduced</th><th style="text-align:right">Laws enacted</th><th style="text-align:right">Enactment rate</th></tr>
+        </thead>
+        <tbody id="productivity-table-body"></tbody>
+      </table>
+    </div>
+    <p class="callout">"Bills introduced" counts House and Senate bills (HR/S) only &mdash; it excludes joint and simple resolutions, which inflates neither side of the ratio. "Laws enacted" counts bills that reached Public Law status as of the data pull date, regardless of which Congress introduced them (a bill can pass in the session after it's introduced, so this slightly understates each Congress's eventual total, most of all for the still-active 119th).</p>
+  </section>
+
+  <div class="methodology">
+    <p><strong style="color:var(--text-secondary)">Methodology.</strong> Vote data covers every House recorded roll-call vote (via api.congress.gov's <code>/house-vote</code> endpoint, cross-referenced against clerk.house.gov's per-vote XML for party-by-party totals) and every Senate roll-call vote (via senate.gov's public roll-call XML feeds) for the 115th through 119th Congresses &mdash; 4,976 House votes and 3,813 Senate votes in total. A vote is scored "party-line" when both the Republican and Democratic majorities held at least 90% of their own party and landed on opposite sides; "bipartisan agreement" when both parties' majorities landed on the same side, regardless of internal unity. Votes where either party cast zero recorded votes (rare procedural edge cases, e.g. voice-vote-adjacent records) are excluded. Legislative-output figures use api.congress.gov's <code>/law</code> and <code>/bill</code> endpoints, queried per Congress as of the data pull date.</p>
+    <p>This measures floor votes, not negotiation that happens before a bill reaches the floor &mdash; a chamber that resolves disagreement in committee, or simply declines to bring divisive bills up for a vote at all, would show as more "bipartisan" here than it might deserve. The Senate's 119th-Congress numbers in particular reflect roughly 18 months of a single, still-ongoing Congress and should be read as a mid-term snapshot rather than a final verdict.</p>
+  </div>
+</div>
+
+<script>
+const partyLineData = [
+  {congress:115, house:53.73, senate:41.07},
+  {congress:116, house:51.95, senate:40.17},
+  {congress:117, house:45.53, senate:46.31},
+  {congress:118, house:48.03, senate:51.81},
+  {congress:119, house:58.39, senate:77.74},
+];
+
+const bipartisanData = [
+  {congress:115, house:31.18, senate:39.73},
+  {congress:116, house:31.55, senate:41.98},
+  {congress:117, house:42.41, senate:18.99},
+  {congress:118, house:29.93, senate:22.00},
+  {congress:119, house:29.44, senate:6.88},
+];
+
+const productivityData = [
+  {congress:115, years:"2017–2018", bills:13563, laws:443},
+  {congress:116, years:"2019–2020", bills:16606, laws:344},
+  {congress:117, years:"2021–2022", bills:17828, laws:365},
+  {congress:118, years:"2023–2024", bills:19315, laws:274},
+  {congress:119, years:"2025–2026*", bills:17575, laws:103},
+];
+
+// ---- Small-multiple line charts (bipartisanship vs. productivity) ----
+function renderLineChart(container, opts) {
+  // opts: { title, series: [{label, color, values}], xLabels, yMax, yTicks, valueFmt }
+  const w = 660, h = 150;
+  const padL = 34, padR = 16, padT = 10, padB = 24;
+  const plotW = w - padL - padR, plotH = h - padT - padB;
+  const n = opts.xLabels.length;
+  const xAt = i => padL + (n === 1 ? plotW / 2 : (plotW * i) / (n - 1));
+  const yAt = v => padT + plotH - (v / opts.yMax) * plotH;
+
+  const block = document.createElement("div");
+  block.className = "line-chart-block";
+
+  const titleEl = document.createElement("p");
+  titleEl.className = "line-chart-title";
+  titleEl.textContent = opts.title;
+  block.appendChild(titleEl);
+
+  const svgParts = [];
+  // gridlines + y-axis labels
+  opts.yTicks.forEach(t => {
+    const y = yAt(t);
+    svgParts.push(`<line class="line-chart-gridline" x1="${padL}" y1="${y}" x2="${w - padR}" y2="${y}"/>`);
+    svgParts.push(`<text class="line-chart-axis-label" x="${padL - 6}" y="${y + 3}" text-anchor="end">${t}%</text>`);
+  });
+  // x-axis labels
+  opts.xLabels.forEach((label, i) => {
+    svgParts.push(`<text class="line-chart-x-label" x="${xAt(i)}" y="${h - 4}">${label}</text>`);
+  });
+  // series lines + dots + end labels
+  opts.series.forEach(s => {
+    const pts = s.values.map((v, i) => `${xAt(i)},${yAt(v)}`).join(" ");
+    svgParts.push(`<polyline class="line-chart-path" points="${pts}" style="stroke:${s.color}"/>`);
+    s.values.forEach((v, i) => {
+      svgParts.push(`<circle class="line-chart-dot" cx="${xAt(i)}" cy="${yAt(v)}" r="4" style="fill:${s.color}"/>`);
+    });
+    const lastI = s.values.length - 1;
+    const lastV = s.values[lastI];
+    const labelY = yAt(lastV) + (s.labelOffset || 0);
+    svgParts.push(`<text class="line-chart-end-label" x="${xAt(lastI) + 8}" y="${labelY + 4}" style="fill:${s.color}">${opts.valueFmt(lastV)}</text>`);
+  });
+
+  const svg = document.createElement("div");
+  svg.innerHTML = `<svg class="line-chart-svg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet">${svgParts.join("")}</svg>`;
+  block.appendChild(svg.firstElementChild);
+
+  if (opts.series.length > 1) {
+    const legend = document.createElement("div");
+    legend.className = "legend";
+    legend.style.marginBottom = "0";
+    legend.style.marginTop = "6px";
+    legend.innerHTML = opts.series.map(s =>
+      `<div class="legend-item"><span class="legend-swatch" style="background:${s.color}"></span>${s.label}</div>`
+    ).join("");
+    block.appendChild(legend);
+  }
+
+  container.appendChild(block);
+}
+
+const trendContainer = document.getElementById("trend-charts");
+const xLabels = bipartisanData.map(d => `${d.congress}th`);
+
+renderLineChart(trendContainer, {
+  title: "Bipartisan agreement rate (House & Senate)",
+  xLabels,
+  yMax: 50,
+  yTicks: [0, 10, 20, 30, 40, 50],
+  valueFmt: v => v.toFixed(1) + "%",
+  series: [
+    { label: "House", color: "var(--series-a)", values: bipartisanData.map(d => d.house) },
+    { label: "Senate", color: "var(--series-b)", values: bipartisanData.map(d => d.senate), labelOffset: 14 },
+  ],
+});
+
+renderLineChart(trendContainer, {
+  title: "Bill enactment rate (both chambers combined)",
+  xLabels,
+  yMax: 4,
+  yTicks: [0, 1, 2, 3, 4],
+  valueFmt: v => v.toFixed(2) + "%",
+  series: [
+    { label: "Enactment rate", color: "var(--accent)", values: productivityData.map(d => d.laws / d.bills * 100) },
+  ],
+});
+
+function renderGroupedBarChart(data, chartId, gridId, maxVal) {
+  const chart = document.getElementById(chartId);
+  const grid = document.getElementById(gridId);
+  data.forEach(d => {
+    [["house", "var(--series-a)", "House"], ["senate", "var(--series-b)", "Senate"]].forEach(([key, color, label]) => {
+      const row = document.createElement("div");
+      row.className = "bar-row";
+      const widthPct = (d[key] / maxVal) * 100;
+      row.innerHTML = `
+        <div class="bar-name">${d.congress}th Cong. <span class="st">${label}</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${widthPct}%; background:${color};"></div></div>
+        <div class="bar-value">${d[key].toFixed(1)}%</div>
+      `;
+      chart.insertBefore(row, grid);
+    });
+  });
+  [0,20,40,60,80].forEach(t => {
+    const pct = (t / maxVal) * 100;
+    const line = document.createElement("div");
+    line.className = "grid-line";
+    line.style.left = pct + "%";
+    const tick = document.createElement("div");
+    tick.className = "grid-tick";
+    tick.style.left = pct + "%";
+    tick.textContent = t + "%";
+    grid.appendChild(line);
+    grid.appendChild(tick);
+  });
+}
+
+renderGroupedBarChart(partyLineData, "partyline-chart", "partyline-grid", 80);
+renderGroupedBarChart(bipartisanData, "bipartisan-chart", "bipartisan-grid", 80);
+
+// ---- Productivity table ----
+const productivityBody = document.getElementById("productivity-table-body");
+productivityData.forEach(d => {
+  const rate = (d.laws / d.bills * 100);
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${d.congress}th</td>
+    <td>${d.years}</td>
+    <td class="num">${d.bills.toLocaleString()}</td>
+    <td class="num">${d.laws.toLocaleString()}</td>
+    <td class="num">${rate.toFixed(2)}%</td>
+  `;
+  productivityBody.appendChild(tr);
+});
+</script>
+</body>
+</html>
