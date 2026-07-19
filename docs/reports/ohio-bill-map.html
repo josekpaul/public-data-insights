@@ -147,7 +147,13 @@ function partyColor(party) {
   return 'var(--text-muted)';
 }
 
-function billStatusLabel(statusFlag) {
+function billStatusLabel(num, statusFlag) {
+  const isResolution = !/^(HB|SB)/.test(num);
+  if (isResolution) {
+    return statusFlag
+      ? '<span class="map-panel-status passed" title="Resolutions aren\'t counted in the Passed/Pending totals above">Adopted</span>'
+      : '<span class="map-panel-status pending" title="Resolutions aren\'t counted in the Passed/Pending totals above">Filed</span>';
+  }
   return statusFlag ? '<span class="map-panel-status passed">Passed</span>' : '<span class="map-panel-status pending">Pending</span>';
 }
 
@@ -160,7 +166,7 @@ function showDistrictPanel(hd) {
   const pendingCount = realBillCount - passedCount;
   const panel = document.getElementById('map-panel');
   const billItems = bills.map(([num, title, passed]) => `
-    <li><a class="bill-link map-panel-bill-num" href="https://legiscan.com/OH/bill/${num}/2025" target="_blank" rel="noopener">${num}</a>${title}${billStatusLabel(passed)}</li>
+    <li><a class="bill-link map-panel-bill-num" href="https://legiscan.com/OH/bill/${num}/2025" target="_blank" rel="noopener">${num}</a>${title}${billStatusLabel(num, passed)}</li>
   `).join('');
   panel.innerHTML = `
     <div class="map-panel-head">
