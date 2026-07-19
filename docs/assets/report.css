@@ -220,6 +220,120 @@ h2 {
 .legend-item { display: flex; align-items: center; gap: 7px; }
 .legend-swatch { width: 11px; height: 11px; border-radius: 2px; flex: none; }
 
+/* ---------- Choropleth map ---------- */
+
+.map-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+}
+.map-svg-wrap {
+  flex: 1 1 380px;
+  max-width: 460px;
+}
+.map-svg-wrap svg { width: 100%; height: auto; display: block; }
+.map-district { stroke-width: 1.1; cursor: pointer; }
+.map-district:hover { stroke-width: 2.2; }
+.map-district.is-selected { stroke-width: 2.6; }
+.map-side {
+  flex: 1 1 260px;
+  min-width: 220px;
+}
+.map-legend-scale {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 4px 0 6px;
+}
+.map-legend-scale span {
+  display: block;
+  width: 28px;
+  height: 12px;
+}
+.map-legend-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  color: var(--text-muted);
+  width: 168px;
+  margin-bottom: 12px;
+}
+.map-party-legend {
+  display: flex;
+  gap: 16px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+}
+.map-party-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 0;
+  border-top: 3px solid;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.map-panel {
+  margin-top: 18px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  padding: 16px 18px;
+}
+.map-panel-empty {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-style: italic;
+}
+.map-panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.map-panel-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.map-panel-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.map-panel-list {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.map-panel-list li {
+  padding: 7px 0;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.map-panel-list li:first-child { border-top: none; }
+.map-panel-bill-num {
+  font-weight: 600;
+  color: var(--series-b);
+  margin-right: 6px;
+}
+.map-panel-status {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.map-panel-status.passed { color: var(--series-a); background: var(--tag-a-bg); }
+.map-panel-status.pending { color: var(--text-muted); background: var(--border); }
+
 /* ---------- Line chart (small multiples, shared x-axis) ---------- */
 
 .line-charts { display: flex; flex-direction: column; gap: 22px; }
