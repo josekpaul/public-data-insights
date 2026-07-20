@@ -71,7 +71,7 @@
     <div class="chart-scroll">
       <table>
         <thead>
-          <tr><th>Bill</th><th>Industry</th><th>Sponsor</th><th style="text-align:right">Matching donor $</th></tr>
+          <tr><th>Bill</th><th>Industry</th><th>Sponsor</th><th>Top matching donor</th><th style="text-align:right">Matching donor $</th></tr>
         </thead>
         <tbody id="match-table-body"></tbody>
       </table>
@@ -95,24 +95,24 @@
 
 <script>
 const matches = [
-  {number:"HB440", url:"https://legiscan.com/OH/bill/HB440/2025", industry:"Nursing / healthcare licensing", sponsor:"Kellie Deeter", party:"R", amount:156392},
-  {number:"HB52", url:"https://legiscan.com/OH/bill/HB52/2025", industry:"Nurse anesthetists / healthcare", sponsor:"Kellie Deeter", party:"R", amount:153152},
-  {number:"HB479", url:"https://legiscan.com/OH/bill/HB479/2025", industry:"Radiology / healthcare imaging", sponsor:"Jean Schmidt", party:"R", amount:35050},
-  {number:"HB246", url:"https://legiscan.com/OH/bill/HB246/2025", industry:"Construction industry", sponsor:"D. J. Swearingen", party:"R", amount:23000},
-  {number:"HB10", url:"https://legiscan.com/OH/bill/HB10/2025", industry:"Agriculture (meat/egg producers)", sponsor:"Roy Klopfenstein", party:"R", amount:21400},
-  {number:"HB65", url:"https://legiscan.com/OH/bill/HB65/2025", industry:"Agriculture", sponsor:"Roy Klopfenstein", party:"R", amount:21400},
-  {number:"HB55", url:"https://legiscan.com/OH/bill/HB55/2025", industry:"Legal / probate industry", sponsor:"Brian Stewart", party:"R", amount:12053},
-  {number:"HB195", url:"https://legiscan.com/OH/bill/HB195/2025", industry:"Commercial / banking law (UCC)", sponsor:"Dani Isaacsohn", party:"D", amount:7500},
-  {number:"HB186", url:"https://legiscan.com/OH/bill/HB186/2025", industry:"Real estate / property tax", sponsor:"James Hoops", party:"R", amount:7471},
-  {number:"HB124", url:"https://legiscan.com/OH/bill/HB124/2025", industry:"Real estate / property tax", sponsor:"David Thomas", party:"R", amount:7225},
-  {number:"HB129", url:"https://legiscan.com/OH/bill/HB129/2025", industry:"Real estate / property tax", sponsor:"David Thomas", party:"R", amount:7225},
-  {number:"HB309", url:"https://legiscan.com/OH/bill/HB309/2025", industry:"Real estate / property tax", sponsor:"David Thomas", party:"R", amount:7225},
-  {number:"HB335", url:"https://legiscan.com/OH/bill/HB335/2025", industry:"Real estate / property tax", sponsor:"David Thomas", party:"R", amount:7225},
-  {number:"HB15", url:"https://legiscan.com/OH/bill/HB15/2025", industry:"Electric utilities", sponsor:"Roy Klopfenstein", party:"R", amount:7000},
-  {number:"HB170", url:"https://legiscan.com/OH/bill/HB170/2025", industry:"Carbon capture / energy", sponsor:"Monica Robb Blasdel", party:"R", amount:5450},
-  {number:"HB227", url:"https://legiscan.com/OH/bill/HB227/2025", industry:"Excavation / utility construction", sponsor:"Monica Robb Blasdel", party:"R", amount:5000},
-  {number:"HB229", url:"https://legiscan.com/OH/bill/HB229/2025", industry:"Pharmacy benefit managers", sponsor:"Kellie Deeter", party:"R", amount:1500},
-  {number:"HB210", url:"https://legiscan.com/OH/bill/HB210/2025", industry:"Scrap metal / recycling", sponsor:"Bill Roemer", party:"R", amount:500},
+  {number:"HB440", url:"https://legiscan.com/OH/bill/HB440/2025", industry:"Nursing / healthcare licensing", sponsor:"Kellie Deeter", party:"R", amount:156392, topDonor:"OSANA Nurse Anesthetists PAC", topDonorAmount:33231},
+  {number:"HB52", url:"https://legiscan.com/OH/bill/HB52/2025", industry:"Nurse anesthetists / healthcare", sponsor:"Kellie Deeter", party:"R", amount:153152, topDonor:"OSANA Nurse Anesthetists PAC", topDonorAmount:33231},
+  {number:"HB479", url:"https://legiscan.com/OH/bill/HB479/2025", industry:"Radiology / healthcare imaging", sponsor:"Jean Schmidt", party:"R", amount:35050, topDonor:"OHCA-PAC (Ohio Health Care Assoc.)", topDonorAmount:15000},
+  {number:"HB246", url:"https://legiscan.com/OH/bill/HB246/2025", industry:"Construction industry", sponsor:"D. J. Swearingen", party:"R", amount:23000, topDonor:"IUOE Political Education Patterns", topDonorAmount:8000},
+  {number:"HB10", url:"https://legiscan.com/OH/bill/HB10/2025", industry:"Agriculture (meat/egg producers)", sponsor:"Roy Klopfenstein", party:"R", amount:21400, topDonor:"Cooper Farms", topDonorAmount:7750},
+  {number:"HB65", url:"https://legiscan.com/OH/bill/HB65/2025", industry:"Agriculture", sponsor:"Roy Klopfenstein", party:"R", amount:21400, topDonor:"Cooper Farms", topDonorAmount:7750},
+  {number:"HB55", url:"https://legiscan.com/OH/bill/HB55/2025", industry:"Legal / probate industry", sponsor:"Brian Stewart", party:"R", amount:12053, topDonor:"Cosgrove Jonhenry LLC (attorney)", topDonorAmount:7003},
+  {number:"HB195", url:"https://legiscan.com/OH/bill/HB195/2025", industry:"Commercial / banking law (UCC)", sponsor:"Dani Isaacsohn", party:"D", amount:7500, topDonor:"Fifth Third Bank (VP, individual)", topDonorAmount:5000},
+  {number:"HB186", url:"https://legiscan.com/OH/bill/HB186/2025", industry:"Real estate / property tax", sponsor:"James Hoops", party:"R", amount:7471, topDonor:"Realtors PAC Ohio", topDonorAmount:4000},
+  {number:"HB124", url:"https://legiscan.com/OH/bill/HB124/2025", industry:"Real estate / property tax", sponsor:"David Thomas", party:"R", amount:7225, topDonor:"Realtors Political Action Committee", topDonorAmount:6850},
+  {number:"HB129", url:"https://legiscan.com/OH/bill/HB129/2025", industry:"Real estate / property tax", sponsor:"David Thomas", party:"R", amount:7225, topDonor:"Realtors Political Action Committee", topDonorAmount:6850},
+  {number:"HB309", url:"https://legiscan.com/OH/bill/HB309/2025", industry:"Real estate / property tax", sponsor:"David Thomas", party:"R", amount:7225, topDonor:"Realtors Political Action Committee", topDonorAmount:6850},
+  {number:"HB335", url:"https://legiscan.com/OH/bill/HB335/2025", industry:"Real estate / property tax", sponsor:"David Thomas", party:"R", amount:7225, topDonor:"Realtors Political Action Committee", topDonorAmount:6850},
+  {number:"HB15", url:"https://legiscan.com/OH/bill/HB15/2025", industry:"Electric utilities", sponsor:"Roy Klopfenstein", party:"R", amount:7000, topDonor:"Vistra Employee Political Action", topDonorAmount:3500},
+  {number:"HB170", url:"https://legiscan.com/OH/bill/HB170/2025", industry:"Carbon capture / energy", sponsor:"Monica Robb Blasdel", party:"R", amount:5450, topDonor:"IGS Ventures Committee for Responsible Gov't", topDonorAmount:2500},
+  {number:"HB227", url:"https://legiscan.com/OH/bill/HB227/2025", industry:"Excavation / utility construction", sponsor:"Monica Robb Blasdel", party:"R", amount:5000, topDonor:"Earth Tech Enterprises Inc.", topDonorAmount:5000},
+  {number:"HB229", url:"https://legiscan.com/OH/bill/HB229/2025", industry:"Pharmacy benefit managers", sponsor:"Kellie Deeter", party:"R", amount:1500, topDonor:"Shrivers Pharmacy (pharmacist, individual)", topDonorAmount:1000},
+  {number:"HB210", url:"https://legiscan.com/OH/bill/HB210/2025", industry:"Scrap metal / recycling", sponsor:"Bill Roemer", party:"R", amount:500, topDonor:"Dealers Investment Group", topDonorAmount:500},
 ];
 
 const tbody = document.getElementById("match-table-body");
@@ -122,6 +122,7 @@ matches.forEach(m => {
     <td><a class="bill-link" href="${m.url}" target="_blank" rel="noopener">${m.number}</a></td>
     <td>${m.industry}</td>
     <td>${m.sponsor} <span class="st">(${m.party})</span></td>
+    <td>${m.topDonor} <span class="st">($${m.topDonorAmount.toLocaleString()})</span></td>
     <td class="num">$${m.amount.toLocaleString()}</td>
   `;
   tbody.appendChild(tr);
