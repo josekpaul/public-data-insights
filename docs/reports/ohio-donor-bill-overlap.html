@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trade groups fund the legislators who write their rules — Gov Data Insights</title>
+<link rel="stylesheet" href="../assets/report.css?v=ef69125a47">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-945HMWM05B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-945HMWM05B');
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="site-name" href="../index.html">Gov Data Insights</a>
+  <span class="site-tagline">Explorations from api.data.gov</span>
+  <nav><a href="../index.html">&larr; All reports</a></nav>
+</header>
+
+<div class="report">
+  <div class="masthead">
+    <p class="kicker">Legislative Data Brief</p>
+    <h1>Trade groups fund the legislators who write their rules</h1>
+    <p class="dek">We matched every passed Ohio House bill with a specific industry angle to its sponsor's campaign donors. Most of the time, the industry a bill touches is also one of the sponsor's top donor categories &mdash; the ordinary, expected shape of state politics, not evidence any one of them did anything wrong.</p>
+    <div class="byline">
+      <span>136th General Assembly, 2025&ndash;2026 Regular Session</span><span class="sep">·</span>
+      <span>Source: LegiScan API, Ohio Secretary of State campaign finance bulk data</span><span class="sep">·</span>
+      <span>Compiled 2026-07-20</span>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat">
+      <div class="stat-value flag">18 / 21</div>
+      <div class="stat-label">passed bills with a specific industry angle also show that industry among the sponsor's top donors</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">61</div>
+      <div class="stat-label">House-sponsored real bills passed this session; only 21 had a specific-enough subject to test at all</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">10</div>
+      <div class="stat-label">distinct sponsors account for every match &mdash; a handful of members write most of the industry-specific legislation</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">$156K</div>
+      <div class="stat-label">largest single-bill overlap: nurse-anesthetist and healthcare donors behind Rep. Kellie Deeter's nursing bills</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>What we're actually measuring</h2>
+    </div>
+    <p class="section-desc">Ohio's <a href="ohio-bill-map.html">bill-map report</a> found that most passed legislation is narrow and technical: a licensing tweak, a professional scope-of-practice change, a single industry's tax mechanism. That raised an obvious question &mdash; when a bill is written for one industry, does that industry also fund the bill's sponsor? We pulled every House member's full 2025&ndash;2026 campaign contributions from the Ohio Secretary of State's bulk data, tagged each of the 61 passed House bills with the specific industry it most directly concerns (21 had one specific enough to test &mdash; the other 40 are budget bills, memorial highway namings, or general-public-safety measures with no single industry angle), and checked whether that industry appears among the sponsor's largest donor categories.</p>
+    <p class="section-desc">This is a description of overlap, not a claim about causation or motive. Trade associations and professional PACs exist specifically to track and fund legislators who work on their issues &mdash; a nurse anesthetists' PAC giving to the sponsor of a nurse-anesthetist bill is the system working exactly as designed, whether or not you think that system should work that way. We also did not check contribution timing: this compares a sponsor's entire two-year donor base against what their bills affect, not whether any specific check arrived before or after any specific bill. A legislator's donor base reflects their general political coalition and professional background as much as any one bill.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Where the industry and the donor match</h2>
+      <span class="section-note">18 bills, ranked by dollar amount from matching donors</span>
+    </div>
+    <p class="section-desc">For each bill, we looked at the sponsor's donor list &mdash; both organizations (PACs, companies) and individuals (grouped by their listed occupation/employer) &mdash; and checked for entries that plausibly belong to the bill's specific industry. Generic multi-industry money (party committees, building-trades umbrella PACs that donate across the whole caucus) doesn't count as a match; only donors tied to the bill's specific subject do.</p>
+    <div class="chart-scroll">
+      <table>
+        <thead>
+          <tr><th>Bill</th><th>Industry</th><th>Sponsor</th><th style="text-align:right">Matching donor $</th></tr>
+        </thead>
+        <tbody id="match-table-body"></tbody>
+      </table>
+    </div>
+    <p class="callout">The clearest case: Rep. Kellie Deeter (R-HD-054) sponsored four bills touching nursing and healthcare licensure &mdash; including <a href="https://legiscan.com/OH/bill/HB52/2025" target="_blank" rel="noopener">HB52</a>, which revises the scope of practice for certified registered nurse anesthetists. Her single largest donor, at $33,231, is the Ohio State Association of Nurse Anesthetists PAC, with another $120K+ from individual CRNAs and healthcare-adjacent employers layered on top &mdash; more than a third of her total $430K raised.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Where it doesn't match</h2>
+      <span class="section-note">3 bills with an industry angle but no donor overlap found</span>
+    </div>
+    <p class="section-desc">Not every industry-relevant bill has a matching donor. Rep. Roy Klopfenstein's <a href="https://legiscan.com/OH/bill/HB433/2025" target="_blank" rel="noopener">HB433</a> (amusement ride inspection fees) found no amusement-park-industry money in his donor list &mdash; his top donors are all agriculture-sector, matching his other bills but not this one. Rep. Meredith Craig's <a href="https://legiscan.com/OH/bill/HB105/2025" target="_blank" rel="noopener">HB105</a> (litigation funding regulation) and Rep. Kellie Deeter's <a href="https://legiscan.com/OH/bill/HB377/2025" target="_blank" rel="noopener">HB377</a> (light-based hair-removal devices) are similarly unmatched. A bill with no donor overlap is not evidence of anything either &mdash; it just means this particular check didn't find one.</p>
+  </section>
+
+  <div class="methodology">
+    <p><strong style="color:var(--text-secondary)">Methodology.</strong> We started from the 100 real bills (HB/SB) passed in the 136th General Assembly, already catalogued in our <a href="ohio-bill-map.html">bill-map report</a>, and kept the 61 with a House prime sponsor. Each bill's title and summary were read by hand and tagged with the single most specific industry or professional group it concerns, where one exists &mdash; 40 bills (memorial highway namings, budget/appropriations bills, general public-safety measures) had no industry specific enough to test and were excluded from the matching step, though they're counted in the denominator above. Campaign contribution data came from the Ohio Secretary of State's bulk Candidate Contributions export for 2025 and 2026 (413,317 and roughly similar row counts respectively), matched to each sponsor by name across both House and Senate filings &mdash; several current House members (Reps. Patton, Humphrey, and Hoops among them) are still filed under their prior Senate committee's office designation from before Ohio's House-Senate term-limit shuffle, so office-only filtering would have silently dropped them. District number alone was not a reliable match key either: several sponsors' SoS filings carry a different district number than their current LegiScan-listed district, most likely a redistricting artifact, so matching was done by name (with two manual nickname corrections: "Jean Schmidt" filed as "Jeannette," "D. J. Swearingen" filed as "Douglas").</p>
+    <p>A "match" means at least one donor &mdash; an organization whose name plausibly ties to the bill's tagged industry, or an individual whose listed occupation/employer does &mdash; appears in the sponsor's contribution list. We did not check contribution timing against bill introduction dates, so this measures a sponsor's overall donor profile, not a before/after sequence tied to any specific bill. Industry tagging and the keyword sets used to detect a match were both built by hand for this report; a different, more or less generous set of keywords would move the exact 18-of-21 figure, though the largest and clearest matches (nurse anesthetists, agriculture) are robust to that choice. This is a small sample &mdash; 21 testable bills, 10 sponsors &mdash; and should be read as illustrative of how state-level donor/subject overlap looks, not as a comprehensive audit of the General Assembly.</p>
+  </div>
+</div>
+
+<script>
+const matches = [
+  {number:"HB440", url:"https://legiscan.com/OH/bill/HB440/2025", industry:"Nursing / healthcare licensing", sponsor:"Kellie Deeter", party:"R", amount:156392},
+  {number:"HB52", url:"https://legiscan.com/OH/bill/HB52/2025", industry:"Nurse anesthetists / healthcare", sponsor:"Kellie Deeter", party:"R", amount:153152},
+  {number:"HB479", url:"https://legiscan.com/OH/bill/HB479/2025", industry:"Radiology / healthcare imaging", sponsor:"Jean Schmidt", party:"R", amount:35050},
+  {number:"HB246", url:"https://legiscan.com/OH/bill/HB246/2025", industry:"Construction industry", sponsor:"D. J. Swearingen", party:"R", amount:23000},
+  {number:"HB10", url:"https://legiscan.com/OH/bill/HB10/2025", industry:"Agriculture (meat/egg producers)", sponsor:"Roy Klopfenstein", party:"R", amount:21400},
+  {number:"HB65", url:"https://legiscan.com/OH/bill/HB65/2025", industry:"Agriculture", sponsor:"Roy Klopfenstein", party:"R", amount:21400},
+  {number:"HB55", url:"https://legiscan.com/OH/bill/HB55/2025", industry:"Legal / probate industry", sponsor:"Brian Stewart", party:"R", amount:12053},
+  {number:"HB195", url:"https://legiscan.com/OH/bill/HB195/2025", industry:"Commercial / banking law (UCC)", sponsor:"Dani Isaacsohn", party:"D", amount:7500},
+  {number:"HB186", url:"https://legiscan.com/OH/bill/HB186/2025", industry:"Real estate / property tax", sponsor:"James Hoops", party:"R", amount:7471},
+  {number:"HB124", url:"https://legiscan.com/OH/bill/HB124/2025", industry:"Real estate / property tax", sponsor:"David Thomas", party:"R", amount:7225},
+  {number:"HB129", url:"https://legiscan.com/OH/bill/HB129/2025", industry:"Real estate / property tax", sponsor:"David Thomas", party:"R", amount:7225},
+  {number:"HB309", url:"https://legiscan.com/OH/bill/HB309/2025", industry:"Real estate / property tax", sponsor:"David Thomas", party:"R", amount:7225},
+  {number:"HB335", url:"https://legiscan.com/OH/bill/HB335/2025", industry:"Real estate / property tax", sponsor:"David Thomas", party:"R", amount:7225},
+  {number:"HB15", url:"https://legiscan.com/OH/bill/HB15/2025", industry:"Electric utilities", sponsor:"Roy Klopfenstein", party:"R", amount:7000},
+  {number:"HB170", url:"https://legiscan.com/OH/bill/HB170/2025", industry:"Carbon capture / energy", sponsor:"Monica Robb Blasdel", party:"R", amount:5450},
+  {number:"HB227", url:"https://legiscan.com/OH/bill/HB227/2025", industry:"Excavation / utility construction", sponsor:"Monica Robb Blasdel", party:"R", amount:5000},
+  {number:"HB229", url:"https://legiscan.com/OH/bill/HB229/2025", industry:"Pharmacy benefit managers", sponsor:"Kellie Deeter", party:"R", amount:1500},
+  {number:"HB210", url:"https://legiscan.com/OH/bill/HB210/2025", industry:"Scrap metal / recycling", sponsor:"Bill Roemer", party:"R", amount:500},
+];
+
+const tbody = document.getElementById("match-table-body");
+matches.forEach(m => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td><a class="bill-link" href="${m.url}" target="_blank" rel="noopener">${m.number}</a></td>
+    <td>${m.industry}</td>
+    <td>${m.sponsor} <span class="st">(${m.party})</span></td>
+    <td class="num">$${m.amount.toLocaleString()}</td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
+
+</body>
+</html>
