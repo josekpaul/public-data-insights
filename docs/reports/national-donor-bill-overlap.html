@@ -95,13 +95,13 @@
 
 <script>
 const matches = [
-  {number:"H.J.Res.106", url:"https://www.congress.gov/bill/119th-congress/house-joint-resolution/106", industry:"Oil & gas / mining", sponsor:"Nick Begich", party:"R", amount:55500, topDonor:"ConocoPhillips", topDonorAmount:21500},
-  {number:"H.J.Res.131", url:"https://www.congress.gov/bill/119th-congress/house-joint-resolution/131", industry:"Oil & gas / mining", sponsor:"Nick Begich", party:"R", amount:55500, topDonor:"ConocoPhillips", topDonorAmount:21500},
-  {number:"H.R.6644", url:"https://www.congress.gov/bill/119th-congress/house-bill/6644", industry:"Real estate / housing finance", sponsor:"J. French Hill", party:"R", amount:30750, topDonor:"Mortgage Bankers Association PAC", topDonorAmount:30750},
-  {number:"H.R.2808", url:"https://www.congress.gov/bill/119th-congress/house-bill/2808", industry:"Real estate / mortgage data", sponsor:"John Rose", party:"R", amount:20000, topDonor:"National Association of Realtors PAC", topDonorAmount:20000},
-  {number:"H.R.2483", url:"https://www.congress.gov/bill/119th-congress/house-bill/2483", industry:"Healthcare / substance-use treatment", sponsor:"Brett Guthrie", party:"R", amount:19800, topDonor:"Pikeville Medical Center", topDonorAmount:19800},
-  {number:"H.R.8322", url:"https://www.congress.gov/bill/119th-congress/house-bill/8322", industry:"Defense / intelligence contracting", sponsor:"Austin Scott", party:"R", amount:14000, topDonor:"Daniel Defense", topDonorAmount:14000},
-  {number:"H.J.Res.35", url:"https://www.congress.gov/bill/119th-congress/house-joint-resolution/35", industry:"Oil & gas / mining", sponsor:"August Pfluger", party:"R", amount:10500, topDonor:"Permian Resources", topDonorAmount:10500},
+  {number:"H.J.Res.106", url:"https://www.congress.gov/bill/119th-congress/house-joint-resolution/106", industry:"Oil & gas / mining", sponsor:"Nick Begich", party:"R", district:"AK-At Large", amount:55500, topDonor:"ConocoPhillips", topDonorAmount:21500},
+  {number:"H.J.Res.131", url:"https://www.congress.gov/bill/119th-congress/house-joint-resolution/131", industry:"Oil & gas / mining", sponsor:"Nick Begich", party:"R", district:"AK-At Large", amount:55500, topDonor:"ConocoPhillips", topDonorAmount:21500},
+  {number:"H.R.6644", url:"https://www.congress.gov/bill/119th-congress/house-bill/6644", industry:"Real estate / housing finance", sponsor:"J. French Hill", party:"R", district:"AR-02", amount:30750, topDonor:"Mortgage Bankers Association PAC", topDonorAmount:30750},
+  {number:"H.R.2808", url:"https://www.congress.gov/bill/119th-congress/house-bill/2808", industry:"Real estate / mortgage data", sponsor:"John Rose", party:"R", district:"TN-06", amount:20000, topDonor:"National Association of Realtors PAC", topDonorAmount:20000},
+  {number:"H.R.2483", url:"https://www.congress.gov/bill/119th-congress/house-bill/2483", industry:"Healthcare / substance-use treatment", sponsor:"Brett Guthrie", party:"R", district:"KY-02", amount:19800, topDonor:"Pikeville Medical Center", topDonorAmount:19800},
+  {number:"H.R.8322", url:"https://www.congress.gov/bill/119th-congress/house-bill/8322", industry:"Defense / intelligence contracting", sponsor:"Austin Scott", party:"R", district:"GA-08", amount:14000, topDonor:"Daniel Defense", topDonorAmount:14000},
+  {number:"H.J.Res.35", url:"https://www.congress.gov/bill/119th-congress/house-joint-resolution/35", industry:"Oil & gas / mining", sponsor:"August Pfluger", party:"R", district:"TX-11", amount:10500, topDonor:"Permian Resources", topDonorAmount:10500},
 ];
 
 const tbody = document.getElementById("match-table-body");
@@ -110,7 +110,7 @@ matches.forEach(m => {
   tr.innerHTML = `
     <td><a class="bill-link" href="${m.url}" target="_blank" rel="noopener">${m.number}</a></td>
     <td>${m.industry}</td>
-    <td>${m.sponsor} <span class="st">(${m.party})</span></td>
+    <td>${m.sponsor} <span class="st">(${m.party}-${m.district})</span></td>
     <td>${m.topDonor} <span class="st">($${m.topDonorAmount.toLocaleString()})</span></td>
     <td class="num">$${m.amount.toLocaleString()}</td>
   `;
