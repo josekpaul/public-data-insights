@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gov Data Insights</title>
-<link rel="stylesheet" href="assets/report.css?v=ef69125a47">
+<link rel="stylesheet" href="assets/report.css?v=2fa65a5edb">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-945HMWM05B"></script>
 <script>
@@ -28,29 +28,20 @@
   <p class="dek">Short, source-linked reports built from api.data.gov and related public APIs — Congress votes, bills, and whatever else turns up something worth a closer look.</p>
 </div>
 
+<div class="report-sections">
+
 <div class="report-section">
   <p class="report-section-title">National</p>
   <div class="report-grid">
 
-    <a class="report-card" href="reports/house-gop-party-unity.html">
+    <a class="report-card" href="reports/national-donor-bill-overlap.html">
       <p class="kicker">Legislative Data Brief</p>
-      <h3>Where House Republicans break ranks</h3>
-      <p class="dek">A narrow majority means a handful of defectors can decide any close vote — and this Congress, all of them come from one side of the aisle.</p>
+      <h3>Whose industry, whose donors</h3>
+      <p class="dek">We ran the same donor-overlap check on the U.S. House that we ran on Ohio's Statehouse. The overlap is real but rarer here — most of what the House actually passes into law isn't industry legislation at all.</p>
       <div class="byline">
-        <span>119th Congress, House recorded votes</span><span class="sep">·</span>
-        <span>Source: api.congress.gov</span><span class="sep">·</span>
-        <span>2026-07-15</span>
-      </div>
-    </a>
-
-    <a class="report-card" href="reports/committee-trade-timing.html">
-      <p class="kicker">Legislative Data Brief</p>
-      <h3>Do committee members trade around their own hearings?</h3>
-      <p class="dek">We scaled a single-senator finding to 42 House members across three committees and nearly 1,000 trade events. All three show trading mildly clustered near their own hearing dates — more than chance predicts, but not in a way that points to any specific hearing.</p>
-      <div class="byline">
-        <span>119th Congress, Financial Services / Energy &amp; Commerce / Armed Services</span><span class="sep">·</span>
-        <span>Source: Clerk of the House, api.congress.gov, clerk.house.gov</span><span class="sep">·</span>
-        <span>2026-07-16</span>
+        <span>119th Congress, House-originated laws</span><span class="sep">·</span>
+        <span>Source: api.congress.gov, FEC.gov (OpenFEC)</span><span class="sep">·</span>
+        <span>2026-07-23</span>
       </div>
     </a>
 
@@ -65,6 +56,28 @@
       </div>
     </a>
 
+    <a class="report-card" href="reports/committee-trade-timing.html">
+      <p class="kicker">Legislative Data Brief</p>
+      <h3>Do committee members trade around their own hearings?</h3>
+      <p class="dek">We scaled a single-senator finding to 42 House members across three committees and nearly 1,000 trade events. All three show trading mildly clustered near their own hearing dates — more than chance predicts, but not in a way that points to any specific hearing.</p>
+      <div class="byline">
+        <span>119th Congress, Financial Services / Energy &amp; Commerce / Armed Services</span><span class="sep">·</span>
+        <span>Source: Clerk of the House, api.congress.gov, clerk.house.gov</span><span class="sep">·</span>
+        <span>2026-07-16</span>
+      </div>
+    </a>
+
+    <a class="report-card" href="reports/house-gop-party-unity.html">
+      <p class="kicker">Legislative Data Brief</p>
+      <h3>Where House Republicans break ranks</h3>
+      <p class="dek">A narrow majority means a handful of defectors can decide any close vote — and this Congress, all of them come from one side of the aisle.</p>
+      <div class="byline">
+        <span>119th Congress, House recorded votes</span><span class="sep">·</span>
+        <span>Source: api.congress.gov</span><span class="sep">·</span>
+        <span>2026-07-15</span>
+      </div>
+    </a>
+
   </div>
 </div>
 
@@ -72,36 +85,14 @@
   <p class="report-section-title">Ohio</p>
   <div class="report-grid">
 
-    <a class="report-card" href="reports/ohio-delegation.html">
+    <a class="report-card" href="reports/ohio-donor-bill-overlap.html">
       <p class="kicker">Legislative Data Brief</p>
-      <h3>Ohio's House delegation, by the numbers</h3>
-      <p class="dek">Fifteen members, one state — how they vote with their party, trade stocks, and raise money looks nothing alike from district to district.</p>
-      <div class="byline">
-        <span>119th Congress, Ohio's 15 House seats</span><span class="sep">·</span>
-        <span>Source: api.congress.gov, Clerk of the House, FEC.gov</span><span class="sep">·</span>
-        <span>2026-07-16</span>
-      </div>
-    </a>
-
-    <a class="report-card" href="reports/ohio-senators.html">
-      <p class="kicker">Legislative Data Brief</p>
-      <h3>Ohio's senators, two very different money stories</h3>
-      <p class="dek">Bernie Moreno and Jon Husted vote together almost every time — the real contrast shows up in fundraising, and in what Moreno's own trading disclosures reveal about a bill he sponsored.</p>
-      <div class="byline">
-        <span>119th Congress, Ohio's 2 Senate seats</span><span class="sep">·</span>
-        <span>Source: senate.gov, api.congress.gov, efdsearch.senate.gov, FEC.gov</span><span class="sep">·</span>
-        <span>2026-07-16</span>
-      </div>
-    </a>
-
-    <a class="report-card" href="reports/ohio-statehouse-unity.html">
-      <p class="kicker">Legislative Data Brief</p>
-      <h3>Ohio's Statehouse: consensus by default</h3>
-      <p class="dek">Congress splits along party lines on most contested votes. Ohio's General Assembly doesn't — most floor votes pass unanimously, and even the sharpest disagreements rarely break cleanly by party.</p>
+      <h3>Trade groups fund the legislators who write their rules</h3>
+      <p class="dek">We matched every passed Ohio House bill with a specific industry angle to its sponsor's campaign donors. Most of the time, the industry a bill touches is also one of the sponsor's top donor categories &mdash; the ordinary shape of state politics, not evidence of wrongdoing.</p>
       <div class="byline">
         <span>136th General Assembly, 2025&ndash;2026 Regular Session</span><span class="sep">·</span>
-        <span>Source: LegiScan API</span><span class="sep">·</span>
-        <span>2026-07-17</span>
+        <span>Source: LegiScan API, Ohio Secretary of State campaign finance</span><span class="sep">·</span>
+        <span>2026-07-20</span>
       </div>
     </a>
 
@@ -116,18 +107,42 @@
       </div>
     </a>
 
-    <a class="report-card" href="reports/ohio-donor-bill-overlap.html">
+    <a class="report-card" href="reports/ohio-statehouse-unity.html">
       <p class="kicker">Legislative Data Brief</p>
-      <h3>Trade groups fund the legislators who write their rules</h3>
-      <p class="dek">We matched every passed Ohio House bill with a specific industry angle to its sponsor's campaign donors. Most of the time, the industry a bill touches is also one of the sponsor's top donor categories &mdash; the ordinary shape of state politics, not evidence of wrongdoing.</p>
+      <h3>Ohio's Statehouse: consensus by default</h3>
+      <p class="dek">Congress splits along party lines on most contested votes. Ohio's General Assembly doesn't — most floor votes pass unanimously, and even the sharpest disagreements rarely break cleanly by party.</p>
       <div class="byline">
         <span>136th General Assembly, 2025&ndash;2026 Regular Session</span><span class="sep">·</span>
-        <span>Source: LegiScan API, Ohio Secretary of State campaign finance</span><span class="sep">·</span>
-        <span>2026-07-20</span>
+        <span>Source: LegiScan API</span><span class="sep">·</span>
+        <span>2026-07-17</span>
+      </div>
+    </a>
+
+    <a class="report-card" href="reports/ohio-senators.html">
+      <p class="kicker">Legislative Data Brief</p>
+      <h3>Ohio's senators, two very different money stories</h3>
+      <p class="dek">Bernie Moreno and Jon Husted vote together almost every time — the real contrast shows up in fundraising, and in what Moreno's own trading disclosures reveal about a bill he sponsored.</p>
+      <div class="byline">
+        <span>119th Congress, Ohio's 2 Senate seats</span><span class="sep">·</span>
+        <span>Source: senate.gov, api.congress.gov, efdsearch.senate.gov, FEC.gov</span><span class="sep">·</span>
+        <span>2026-07-16</span>
+      </div>
+    </a>
+
+    <a class="report-card" href="reports/ohio-delegation.html">
+      <p class="kicker">Legislative Data Brief</p>
+      <h3>Ohio's House delegation, by the numbers</h3>
+      <p class="dek">Fifteen members, one state — how they vote with their party, trade stocks, and raise money looks nothing alike from district to district.</p>
+      <div class="byline">
+        <span>119th Congress, Ohio's 15 House seats</span><span class="sep">·</span>
+        <span>Source: api.congress.gov, Clerk of the House, FEC.gov</span><span class="sep">·</span>
+        <span>2026-07-16</span>
       </div>
     </a>
 
   </div>
+</div>
+
 </div>
 
 </body>
