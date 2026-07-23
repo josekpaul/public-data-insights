@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Whose industry, whose donors — Gov Data Insights</title>
+<link rel="stylesheet" href="../assets/report.css?v=2fa65a5edb">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-945HMWM05B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-945HMWM05B');
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="site-name" href="../index.html">Gov Data Insights</a>
+  <span class="site-tagline">Explorations from api.data.gov</span>
+  <nav><a href="../index.html">&larr; All reports</a></nav>
+</header>
+
+<div class="report">
+  <div class="masthead">
+    <p class="kicker">Legislative Data Brief</p>
+    <h1>Whose industry, whose donors</h1>
+    <p class="dek">We ran the same check we ran on Ohio's Statehouse against the U.S. House: every bill that became law this Congress with a clear industry angle, matched against its sponsor's campaign donors. The overlap is real but much rarer here &mdash; most of what the House actually passes into law isn't industry legislation at all.</p>
+    <div class="byline">
+      <span>119th Congress, House-originated laws</span><span class="sep">·</span>
+      <span>Source: api.congress.gov, FEC.gov (OpenFEC)</span><span class="sep">·</span>
+      <span>Compiled 2026-07-23</span>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat">
+      <div class="stat-value flag">7 / 24</div>
+      <div class="stat-label">passed bills with a specific industry angle also show that industry among the sponsor's top donors</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">64</div>
+      <div class="stat-label">House-originated bills signed into law this Congress; only 24 had a subject specific enough to test at all</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">40</div>
+      <div class="stat-label">of the 64 were ceremonial, appropriations, or narrow constituent-service items with no industry to match against</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">$55.5K</div>
+      <div class="stat-label">largest single-bill overlap: oil &amp; gas donors behind Rep. Nick Begich's two Alaska drilling-related resolutions</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>What we're actually measuring</h2>
+    </div>
+    <p class="section-desc">This mirrors our earlier <a href="ohio-donor-bill-overlap.html">Ohio Statehouse report</a>: for every bill that became law, does the industry it most directly touches also appear among the sponsor's largest donors? At the federal level the pool of bills that even qualify for the test is much smaller. Of the 64 House-originated bills signed into law during the 119th Congress, 25 were Medal of Honor authorizations, facility namings, or similar ceremonial measures; another 16 were appropriations, continuing resolutions, or broad multi-agency spending bills that don't belong to any one industry; several more were narrow constituent-service or tribal-land items. Only 24 had a specific enough industry angle to test &mdash; things like a regulatory rule disapproval that benefits one sector, a licensing or standards bill, or a financial-services reform.</p>
+    <p class="section-desc">For each of those 24, we pulled the sponsor's 2025&ndash;2026 campaign finance data from the FEC: itemized individual contributions grouped by donor's listed employer, and organizational (PAC) contributions, both scoped to the sponsor's principal campaign committee. We excluded generic money that isn't tied to any specific industry &mdash; joint fundraising committees, party leadership PACs, WinRed/ActBlue processing conduits, and candidates' own self-funding &mdash; and checked what's left for a plausible match to the bill's industry.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Where the industry and the donor match</h2>
+      <span class="section-note">7 bills, ranked by dollar amount from matching donors</span>
+    </div>
+    <p class="section-desc">As with the Ohio report, a "match" means a donor &mdash; an individual grouped by employer, or an organization/PAC &mdash; plausibly ties to the bill's specific industry. Money that funds a member's entire caucus or party apparatus, rather than their specific committee work, doesn't count.</p>
+    <div class="chart-scroll">
+      <table>
+        <thead>
+          <tr><th>Bill</th><th>Industry</th><th>Sponsor</th><th>Top matching donor</th><th style="text-align:right">Matching donor $</th></tr>
+        </thead>
+        <tbody id="match-table-body"></tbody>
+      </table>
+    </div>
+    <p class="callout">The clearest case: Rep. Nick Begich (R-AK-At Large) sponsored two disapproval resolutions blocking federal restrictions on Alaska oil and gas development &mdash; <a href="https://www.congress.gov/bill/119th-congress/house-joint-resolution/106" target="_blank" rel="noopener">H.J.Res.106</a> (overturning a BLM land-use plan restricting the Central Yukon) and <a href="https://www.congress.gov/bill/119th-congress/house-joint-resolution/131" target="_blank" rel="noopener">H.J.Res.131</a> (overturning the Coastal Plain oil and gas leasing decision). His campaign's top donors include ConocoPhillips ($21,500), Alaska oilfield services firm Saulsbury Industries ($20,000), and Midland Energy ($14,000) &mdash; $55,500 in identifiably oil-and-gas money behind two bills that open more federal land to oil and gas leasing.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Where it doesn't match</h2>
+      <span class="section-note">17 bills with an industry angle but no donor overlap found</span>
+    </div>
+    <p class="section-desc">Most industry-relevant bills in this set found no matching donor. Several disapproval resolutions rolling back Department of Energy appliance efficiency standards &mdash; sponsored by Reps. Palmer, Bice, Clyde, and Goldman &mdash; found no appliance-manufacturing money in those members' donor lists. Rep. H. Morgan Griffith's <a href="https://www.congress.gov/bill/119th-congress/house-joint-resolution/61" target="_blank" rel="noopener">H.J.Res.61</a> (disapproving EPA tire-manufacturing emissions standards) found no tire-industry donors either, though his list does include National Automobile Dealers Association money &mdash; relevant to his other work, not this bill. A bill with no donor overlap isn't evidence of anything on its own; it just means this particular check didn't turn one up in a sponsor's top donors.</p>
+  </section>
+
+  <div class="methodology">
+    <p><strong style="color:var(--text-secondary)">Methodology.</strong> We started from all 104 bills that became law during the 119th Congress (via api.congress.gov's <code>/law/119</code> endpoint) and kept the 64 that originated in the House. Each bill's title was read by hand and tagged with the single most specific industry it concerns, where one exists; 40 bills &mdash; Medal of Honor and Congressional Gold Medal authorizations, VA facility namings, appropriations and continuing-resolution packages, tribal land settlements, and similarly broad or ceremonial measures &mdash; had no industry specific enough to test and were excluded from matching, though they're counted in the denominator above. Campaign finance data came from the OpenFEC API: each sponsor was matched to their FEC candidate ID by name, state, and office, then to their principal campaign committee (not just any committee associated with the candidate &mdash; some members have multiple registered committees from prior cycles or other offices sought, and only the one actively raising for the current cycle was used). Individual contributions came from the <code>by_employer</code> aggregate endpoint; organizational contributions were pulled as itemized records filtered to committee-type contributors and aggregated by donor name in code, since the FEC does not provide a pre-aggregated view of PAC totals the way it does for individual employers.</p>
+    <p>A "match" means at least one donor in a sponsor's top individual-employer or top-PAC lists plausibly ties to the bill's tagged industry, after excluding money that isn't industry-specific: joint fundraising committees, party leadership funds (Grow the Majority, Defend the Majority, Take Back the House, and similar), WinRed/ActBlue processing conduits, and candidates' own self-funding loans. We did not check contribution timing against bill introduction dates &mdash; this measures a sponsor's overall 2025&ndash;2026 donor profile, not a before/after sequence tied to any one bill. Industry tagging and the matching keywords were both built by hand for this report; a different set of keywords would move the exact 7-of-24 figure somewhat, though the largest match (Begich/oil &amp; gas) is robust to that choice. The federal sample here is much smaller than Ohio's &mdash; 24 testable bills against 21 in Ohio &mdash; because so much of what the House passes into law in a divided, narrow-majority Congress is appropriations and ceremonial business rather than substantive industry legislation. That itself is a real difference between the two levels of government, not an artifact of the method.</p>
+  </div>
+</div>
+
+<script>
+const matches = [
+  {number:"H.J.Res.106", url:"https://www.congress.gov/bill/119th-congress/house-joint-resolution/106", industry:"Oil & gas / mining", sponsor:"Nick Begich", party:"R", amount:55500, topDonor:"ConocoPhillips", topDonorAmount:21500},
+  {number:"H.J.Res.131", url:"https://www.congress.gov/bill/119th-congress/house-joint-resolution/131", industry:"Oil & gas / mining", sponsor:"Nick Begich", party:"R", amount:55500, topDonor:"ConocoPhillips", topDonorAmount:21500},
+  {number:"H.R.6644", url:"https://www.congress.gov/bill/119th-congress/house-bill/6644", industry:"Real estate / housing finance", sponsor:"J. French Hill", party:"R", amount:30750, topDonor:"Mortgage Bankers Association PAC", topDonorAmount:30750},
+  {number:"H.R.2808", url:"https://www.congress.gov/bill/119th-congress/house-bill/2808", industry:"Real estate / mortgage data", sponsor:"John Rose", party:"R", amount:20000, topDonor:"National Association of Realtors PAC", topDonorAmount:20000},
+  {number:"H.R.2483", url:"https://www.congress.gov/bill/119th-congress/house-bill/2483", industry:"Healthcare / substance-use treatment", sponsor:"Brett Guthrie", party:"R", amount:19800, topDonor:"Pikeville Medical Center", topDonorAmount:19800},
+  {number:"H.R.8322", url:"https://www.congress.gov/bill/119th-congress/house-bill/8322", industry:"Defense / intelligence contracting", sponsor:"Austin Scott", party:"R", amount:14000, topDonor:"Daniel Defense", topDonorAmount:14000},
+  {number:"H.J.Res.35", url:"https://www.congress.gov/bill/119th-congress/house-joint-resolution/35", industry:"Oil & gas / mining", sponsor:"August Pfluger", party:"R", amount:10500, topDonor:"Permian Resources", topDonorAmount:10500},
+];
+
+const tbody = document.getElementById("match-table-body");
+matches.forEach(m => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td><a class="bill-link" href="${m.url}" target="_blank" rel="noopener">${m.number}</a></td>
+    <td>${m.industry}</td>
+    <td>${m.sponsor} <span class="st">(${m.party})</span></td>
+    <td>${m.topDonor} <span class="st">($${m.topDonorAmount.toLocaleString()})</span></td>
+    <td class="num">$${m.amount.toLocaleString()}</td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
+
+</body>
+</html>
