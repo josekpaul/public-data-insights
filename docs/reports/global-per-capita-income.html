@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Countries and US states, ranked as one list — Gov Data Insights</title>
+<link rel="stylesheet" href="../assets/report.css?v=2fa65a5edb">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-945HMWM05B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-945HMWM05B');
+</script>
+<style>
+  /* ---------- Report-specific: sortable/filterable entity table ---------- */
+  .pc-controls {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin: 0 0 14px;
+  }
+  .pc-search { flex: 1 1 200px; position: relative; }
+  .pc-search input {
+    width: 100%; font: inherit; font-size: 13px;
+    padding: 8px 12px 8px 30px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background: var(--surface-1);
+    color: var(--text-primary);
+  }
+  .pc-search input:focus-visible { outline: 2px solid var(--series-b); outline-offset: 1px; }
+  .pc-search::before {
+    content: "";
+    position: absolute; left: 10px; top: 50%; width: 11px; height: 11px;
+    transform: translateY(-50%);
+    border: 1.5px solid var(--text-muted); border-radius: 50%;
+    box-shadow: 3px 3px 0 -2px var(--text-muted);
+    opacity: 0.8;
+  }
+  .pc-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pc-pill {
+    font: inherit; font-size: 11.5px; font-weight: 600;
+    padding: 6px 11px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface-1);
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .pc-pill[aria-pressed="true"] {
+    background: var(--accent); border-color: var(--accent); color: var(--surface-1);
+  }
+  .pc-pill:focus-visible { outline: 2px solid var(--series-b); outline-offset: 2px; }
+  .pc-toggle {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11.5px; color: var(--text-secondary); font-weight: 600;
+    cursor: pointer; user-select: none; margin-left: auto;
+  }
+  .pc-toggle input { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
+  .pc-count { font-size: 11.5px; color: var(--text-muted); margin: 0 0 10px; }
+  .pc-count strong { color: var(--text-primary); }
+
+  #pc-table thead th { cursor: pointer; white-space: nowrap; }
+  #pc-table thead th:hover { color: var(--text-primary); }
+  #pc-table thead th .arrow { opacity: 0; margin-left: 3px; font-size: 0.75em; }
+  #pc-table thead th[data-active="true"] .arrow { opacity: 1; color: var(--accent); }
+  #pc-table td.rank { color: var(--text-muted); font-weight: 600; width: 1%; }
+  #pc-table td.name { font-weight: 600; }
+  #pc-table td.name .parent { font-weight: 400; color: var(--text-muted); font-size: 0.85em; margin-left: 5px; }
+  #pc-table td.num .sec { display: block; font-weight: 400; color: var(--text-muted); font-size: 0.78em; }
+  #pc-table .note-flag {
+    display: inline-block; margin-left: 5px; width: 15px; height: 15px; line-height: 15px;
+    text-align: center; border-radius: 50%; font-size: 10px; font-weight: 700;
+    background: var(--tag-a-bg); color: var(--accent); cursor: help;
+  }
+  .pc-empty { padding: 30px 10px; text-align: center; color: var(--text-muted); font-size: 13px; }
+
+  .anomaly-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 4px; }
+  .anomaly-row { background: var(--surface-1); padding: 14px 18px; display: grid; grid-template-columns: 160px 1fr; gap: 14px; align-items: baseline; }
+  @media (max-width: 620px) { .anomaly-row { grid-template-columns: 1fr; gap: 4px; } }
+  .anomaly-name { font-weight: 700; font-size: 13.5px; }
+  .anomaly-name .tag { display: block; margin-top: 4px; width: fit-content; }
+  .anomaly-text { font-size: 12.5px; line-height: 1.55; color: var(--text-secondary); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="site-name" href="../index.html">Gov Data Insights</a>
+  <span class="site-tagline">Explorations from api.data.gov</span>
+  <nav><a href="../index.html">&larr; All reports</a></nav>
+</header>
+
+<div class="report">
+  <div class="masthead">
+    <p class="kicker">Global Data Brief</p>
+    <h1>Countries and US states, ranked as one list</h1>
+    <p class="dek">GDP per capita at purchasing power parity, with each of the 50 states and DC treated as its own country. Sixteen states outrank the US national average &mdash; and the country-vs-state spread hides some real distortions worth naming before you read too much into any single rank.</p>
+    <div class="byline">
+      <span>2025 reference year, 237 entities</span><span class="sep">·</span>
+      <span>Source: World Bank WDI, IMF WEO, BEA, U.S. Census Bureau</span><span class="sep">·</span>
+      <span>Compiled 2026-07-29</span>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat">
+      <div class="stat-value flag">16 / 50</div>
+      <div class="stat-label">US states (plus DC) rank above the US national average of $90,027 per capita</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">237</div>
+      <div class="stat-label">entities ranked: 182 countries, 4 territories, 51 US jurisdictions, on one scale</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">$277.7K</div>
+      <div class="stat-label">District of Columbia's figure &mdash; the single highest in the ranking, and the clearest commuting artifact in it</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">89th</div>
+      <div class="stat-label">Mississippi's global rank, the poorest US state &mdash; still just ahead of Japan</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>What this number actually is</h2>
+    </div>
+    <p class="section-desc">GDP per capita is <strong>total economic output produced within a place, divided by the number of people who live there</strong> &mdash; not household income, not take-home pay, not what a typical resident actually earns. It counts corporate profits, government spending, capital investment, and business activity of every kind, whether or not any of it ever reaches a household budget. Median household income is a different, and for most places meaningfully lower, number: it's counted per household rather than per person, it reflects what actually lands in residents' pockets rather than total output, and it isn't pulled down by a long tail of very poor households the way an average can be pulled up by a short tail of very rich ones. Purchasing power parity (PPP) adjusts for the fact that a dollar goes further in a place with lower prices, so a given PPP figure represents comparable buying power across countries even though local prices and currencies differ.</p>
+    <p class="section-desc">The gap between output and income is exactly why the entities in <a href="#anomalies">the section below</a> rank where they do: DC, Ireland, Singapore, Luxembourg, Qatar, Macao and Guyana all have GDP figures inflated by production or profit that doesn't belong to their resident population &mdash; commuters, multinational accounting, or resource rents that flow mostly to foreign investors and governments. Reading this ranking as a measure of who's "richest" works reasonably well in the middle of the table, where output and resident income track each other fairly closely; it works much less well at the extremes.</p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Why states belong on the same scale as countries</h2>
+    </div>
+    <p class="section-desc">The international dollar is defined so that one buys, in any country, what one US dollar buys in the United States. That means US GDP per capita in PPP terms already equals US GDP per capita in nominal dollars &mdash; and a state's current-dollar GDP per capita is therefore already on the same international-dollar scale as every country in this table, with no conversion needed. The one caveat: that equivalence holds at the <em>national average</em> US price level, and prices actually run from about 87 in Arkansas and Mississippi to about 111 in California and Hawaii (BEA Regional Price Parities, 2024). The RPP-adjust toggle below restates each state at the US average, which is the more careful comparison; the unadjusted figure is what's usually quoted and is shown by default.</p>
+    <p class="section-desc">Taiwan is the one exception to the sourcing: it has no World Bank entry at all, so its figure comes from the IMF instead and isn't perfectly methodologically aligned with the rest of the table.</p>
+  </section>
+
+  <section id="anomalies">
+    <div class="section-head">
+      <h2>Reading the anomalies</h2>
+      <span class="section-note">11 entities flagged in the table below</span>
+    </div>
+    <p class="section-desc">GDP per capita measures output produced within a jurisdiction's borders, divided by its resident population &mdash; not resident income. Wherever a large share of that output is produced by non-residents, booked there for tax reasons, or extracted as a resource rent that mostly leaves the country, the figure runs well ahead of what people who actually live there take home. These are the clearest cases in the table; look for the flagged circle next to an entity's name for the same note inline.</p>
+    <div class="anomaly-grid">
+      <div class="anomaly-row">
+        <div class="anomaly-name">District of Columbia<span class="tag a">Commuting artifact</span></div>
+        <div class="anomaly-text">Ranks #1 at $277,689 &mdash; but roughly 500,000 people commute in daily from Maryland and Virginia. Their output lands in DC's numerator; they're counted in another jurisdiction's population. DC's median household income is far below what this figure implies.</div>
+      </div>
+      <div class="anomaly-row">
+        <div class="anomaly-name">Ireland<span class="tag a">Profit-booking</span></div>
+        <div class="anomaly-text">Ranks #4 at $155,089. Multinational IP transfers (a 26% single-year GDP jump in 2015) and aircraft-leasing profits are booked here for tax reasons. Ireland's own GNI* measure, designed to strip this out, runs about 45% lower than GDP &mdash; which would put it closer to 30th, not 4th.</div>
+      </div>
+      <div class="anomaly-row">
+        <div class="anomaly-name">Guyana<span class="tag a">Oil windfall, uneven</span></div>
+        <div class="anomaly-text">Ranks #18 at $97,899, and unlike Ireland this is real physical output &mdash; ExxonMobil's Stabroek discovery took Guyana to roughly 650,000 barrels/day across 800,000 people. But the production-sharing agreement lets the Exxon-Hess-CNOOC consortium recover costs and take profit oil first, so much of that income leaves the country; poverty remains widespread, especially in hinterland and Indigenous communities.</div>
+      </div>
+      <div class="anomaly-row">
+        <div class="anomaly-name">Singapore, Luxembourg<span class="tag a">Hub economies</span></div>
+        <div class="anomaly-text">Rank #2 ($163,354) and #3 ($156,542). Both are financial/trade hubs whose output reflects cross-border activity and, for Luxembourg, a workforce that substantially commutes in from France, Germany and Belgium &mdash; the same population/output mismatch as DC, at a national scale.</div>
+      </div>
+      <div class="anomaly-row">
+        <div class="anomaly-name">Qatar, Brunei<span class="tag a">Resource rents</span></div>
+        <div class="anomaly-text">Rank #6 ($128,883) and #23 ($92,430). LNG and oil revenue divided by small populations that are substantially non-citizen migrant labor rather than a broad domestic economy.</div>
+      </div>
+      <div class="anomaly-row">
+        <div class="anomaly-name">Macao SAR, China<span class="tag a">Casino/tourism revenue</span></div>
+        <div class="anomaly-text">Ranks #5 at $137,031. Gaming and tourism revenue from non-resident visitors dominates GDP relative to the small resident population &mdash; the same shape as Qatar's rents, sourced from casinos instead of gas fields.</div>
+      </div>
+      <div class="anomaly-row">
+        <div class="anomaly-name">Taiwan<span class="tag b">Different source</span></div>
+        <div class="anomaly-text">Ranks #21 at $93,700. Absent from World Bank WDI entirely, so this figure is an IMF estimate instead &mdash; the only entity in the table not on the same underlying methodology as the rest.</div>
+      </div>
+      <div class="anomaly-row">
+        <div class="anomaly-name">Mississippi<span class="tag b">Widest US spread</span></div>
+        <div class="anomaly-text">The poorest US state at $55,877, ranking 89th globally &mdash; still just ahead of Japan. The gap from Mississippi to DC ($277,689) is wider than the gap from Mississippi to most of the countries below it.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>The full ranking</h2>
+      <span class="section-note" id="pc-shown-note">237 entities</span>
+    </div>
+    <div class="pc-controls">
+      <div class="pc-search">
+        <input type="text" id="pc-q" placeholder="Search a country or state&hellip;" autocomplete="off">
+      </div>
+      <div class="pc-pills" id="pc-pills" role="group" aria-label="Filter by type">
+        <button class="pc-pill" data-filter="all" aria-pressed="true">All</button>
+        <button class="pc-pill" data-filter="country" aria-pressed="false">Countries</button>
+        <button class="pc-pill" data-filter="state" aria-pressed="false">US states</button>
+        <button class="pc-pill" data-filter="territory" aria-pressed="false">Territories</button>
+      </div>
+      <label class="pc-toggle" for="pc-rpp">
+        <input type="checkbox" id="pc-rpp">
+        RPP-adjust states
+      </label>
+    </div>
+    <p class="pc-count"><strong id="pc-count-val">237</strong> of 237 shown</p>
+    <div class="chart-scroll">
+      <table id="pc-table">
+        <thead>
+          <tr>
+            <th data-key="rank" data-active="true" style="width:1%">Rank<span class="arrow">&#9660;</span></th>
+            <th data-key="name">Entity<span class="arrow">&#9660;</span></th>
+            <th data-key="type">Type<span class="arrow">&#9660;</span></th>
+            <th data-key="gdp" class="num">GDP per capita<span class="arrow">&#9660;</span></th>
+            <th data-key="pop" class="num">Population<span class="arrow">&#9660;</span></th>
+          </tr>
+        </thead>
+        <tbody id="pc-rows"></tbody>
+      </table>
+      <div class="pc-empty" id="pc-empty" hidden>No entity matches &ldquo;<span id="pc-empty-q"></span>&rdquo;.</div>
+    </div>
+  </section>
+
+  <div class="methodology">
+    <p><strong style="color:var(--text-secondary)">Methodology.</strong> Country figures are World Bank World Development Indicators, indicator <code>NY.GDP.PCAP.PP.CD</code>, reference year 2025, database vintage last updated 2026-07-13 &mdash; 185 entities have a 2025 value: 181 sovereign countries and 4 territories, with PPPs from the ICP 2021 round. Regional and income-group aggregates were excluded. Taiwan, absent from World Bank WDI, is added from the IMF World Economic Outlook (April 2026), <code>PPPPC</code>, 2025 &mdash; the only entity not on the WDI series. US state figures are BEA current-dollar GDP by state (SAGDP2N, 2025, vintage released 2026-04-09) divided by Census Bureau resident population (Vintage 2025 / NST-EST2025, July 1 2025); both were read from FRED's republication of the same series, since BEA and Census now publish these tables only through JavaScript interactive apps or key-gated APIs. The RPP-adjusted column restates state figures using BEA Regional Price Parities (all items, US=100, 2024, the latest year published) &mdash; a reasonable correction, not a like-for-like PPP conversion, since RPPs are a US-internal index on a different basket than the ICP's.</p>
+    <p>This measures output produced within a jurisdiction, per resident &mdash; not household income. The "reading the anomalies" section above lists the clearest cases where that gap is large; PPP estimates in general carry real uncertainty, and gaps of a few percent between adjacent ranks aren't meaningful. Thirteen countries and most small territories (Afghanistan, Cuba, North Korea, Puerto Rico, Bermuda, and similar) have no published 2025 World Bank figure and are simply absent. The "United States" row is national data and overlaps the 51 state rows below it &mdash; it's kept as a benchmark, not counted as an additional independent entity. The 51 state GDP figures sum to slightly less than national GDP because BEA doesn't allocate federal activity abroad, or the statistical discrepancy, to individual states.</p>
+  </div>
+</div>
+
+<script>
+const PC_DATA = [{"rank":1,"name":"District of Columbia","type":"state","parent":"United States","gdp":277689.0,"gdpAdj":252672.0,"pop":693645.0,"noteTag":"Commuting artifact","noteText":"About 500,000 people commute in from Maryland/Virginia \u2014 their output counts here, their persons don't."},{"rank":2,"name":"Singapore","type":"country","parent":null,"gdp":163354.0,"gdpAdj":null,"pop":null,"noteTag":"Financial/trade hub","noteText":"A regional financial and trade hub with output well above what's typical for its resident population size."},{"rank":3,"name":"Luxembourg","type":"country","parent":null,"gdp":156542.0,"gdpAdj":null,"pop":null,"noteTag":"Cross-border workers","noteText":"A financial-sector economy where a large share of the workforce commutes in from France, Germany and Belgium and isn't in the population count."},{"rank":4,"name":"Ireland","type":"country","parent":null,"gdp":155089.0,"gdpAdj":null,"pop":null,"noteTag":"Profit-booking","noteText":"Multinational IP and aircraft-leasing profits booked here inflate GDP well past resident incomes; Ireland's own GNI* measure runs roughly 45% lower."},{"rank":5,"name":"Macao SAR, China","type":"territory","parent":"China","gdp":137031.0,"gdpAdj":null,"pop":null,"noteTag":"Casino/tourism revenue","noteText":"Gaming and tourism revenue from non-resident visitors dominates GDP relative to the small resident population."},{"rank":6,"name":"Qatar","type":"country","parent":null,"gdp":128883.0,"gdpAdj":null,"pop":null,"noteTag":"Resource rents","noteText":"LNG export revenue divided by a population that's mostly non-citizen migrant labor, not a broad domestic economy."},{"rank":7,"name":"New York","type":"state","parent":"United States","gdp":123369.0,"gdpAdj":114314.0,"pop":20002427.0},{"rank":8,"name":"Massachusetts","type":"state","parent":"United States","gdp":114635.0,"gdpAdj":108395.0,"pop":7154084.0},{"rank":9,"name":"Washington","type":"state","parent":"United States","gdp":111860.0,"gdpAdj":104529.0,"pop":8001020.0},{"rank":10,"name":"Delaware","type":"state","parent":"United States","gdp":110588.0,"gdpAdj":110801.0,"pop":1059952.0},{"rank":11,"name":"California","type":"state","parent":"United States","gdp":108012.0,"gdpAdj":97554.0,"pop":39355309.0},{"rank":12,"name":"Norway","type":"country","parent":null,"gdp":104044.0,"gdpAdj":null,"pop":null},{"rank":13,"name":"Switzerland","type":"country","parent":null,"gdp":102513.0,"gdpAdj":null,"pop":null},{"rank":14,"name":"North Dakota","type":"state","parent":"United States","gdp":102436.0,"gdpAdj":115150.0,"pop":799358.0},{"rank":15,"name":"Connecticut","type":"state","parent":"United States","gdp":102062.0,"gdpAdj":98506.0,"pop":3688496.0},{"rank":16,"name":"Alaska","type":"state","parent":"United States","gdp":101742.0,"gdpAdj":99397.0,"pop":737270.0},{"rank":17,"name":"Nebraska","type":"state","parent":"United States","gdp":98153.0,"gdpAdj":108934.0,"pop":2018006.0},{"rank":18,"name":"Guyana","type":"country","parent":null,"gdp":97899.0,"gdpAdj":null,"pop":null,"noteTag":"Oil windfall, uneven","noteText":"ExxonMobil's Stabroek discovery (2019) drove real output, but the production-sharing deal means much of the income leaves the country before reaching residents; poverty remains widespread."},{"rank":19,"name":"Colorado","type":"state","parent":"United States","gdp":97184.0,"gdpAdj":94306.0,"pop":6012561.0},{"rank":20,"name":"Illinois","type":"state","parent":"United States","gdp":94503.0,"gdpAdj":94543.0,"pop":12719141.0},{"rank":21,"name":"Taiwan","type":"country","parent":null,"gdp":93700.0,"gdpAdj":null,"pop":null,"noteTag":"Different source","noteText":"Not covered by World Bank WDI; this figure is an IMF estimate, not directly the same methodology as the rest of the table."},{"rank":22,"name":"New Jersey","type":"state","parent":"United States","gdp":92915.0,"gdpAdj":85396.0,"pop":9548215.0},{"rank":23,"name":"Brunei Darussalam","type":"country","parent":null,"gdp":92430.0,"gdpAdj":null,"pop":null,"noteTag":"Resource rents","noteText":"Oil and gas revenue divided by a small population \u2014 similar dynamic to Qatar, on a smaller scale."},{"rank":24,"name":"Texas","type":"state","parent":"United States","gdp":91594.0,"gdpAdj":94371.0,"pop":31709821.0},{"rank":25,"name":"Minnesota","type":"state","parent":"United States","gdp":91154.0,"gdpAdj":92429.0,"pop":5830405.0},{"rank":26,"name":"Maryland","type":"state","parent":"United States","gdp":90680.0,"gdpAdj":86396.0,"pop":6265347.0},{"rank":27,"name":"United States","type":"country","parent":null,"gdp":90027.0,"gdpAdj":null,"pop":null,"noteTag":"National benchmark","noteText":"Overlaps the 51 state rows below/above it in the ranking \u2014 kept as a reference point, not an additional independent entity."},{"rank":28,"name":"Virginia","type":"state","parent":"United States","gdp":89914.0,"gdpAdj":88932.0,"pop":8880107.0},{"rank":29,"name":"Wyoming","type":"state","parent":"United States","gdp":89379.0,"gdpAdj":96427.0,"pop":588753.0},{"rank":30,"name":"Utah","type":"state","parent":"United States","gdp":89286.0,"gdpAdj":90312.0,"pop":3538904.0},{"rank":31,"name":"New Hampshire","type":"state","parent":"United States","gdp":88688.0,"gdpAdj":85142.0,"pop":1415342.0},{"rank":32,"name":"Netherlands","type":"country","parent":null,"gdp":87320.0,"gdpAdj":null,"pop":null},{"rank":33,"name":"Hawaii","type":"state","parent":"United States","gdp":86967.0,"gdpAdj":79096.0,"pop":1432820.0},{"rank":34,"name":"South Dakota","type":"state","parent":"United States","gdp":86248.0,"gdpAdj":97361.0,"pop":935094.0},{"rank":35,"name":"Nevada","type":"state","parent":"United States","gdp":85752.0,"gdpAdj":85770.0,"pop":3282188.0},{"rank":36,"name":"Iowa","type":"state","parent":"United States","gdp":85570.0,"gdpAdj":97502.0,"pop":3238387.0},{"rank":37,"name":"Iceland","type":"country","parent":null,"gdp":83431.0,"gdpAdj":null,"pop":null},{"rank":38,"name":"Denmark","type":"country","parent":null,"gdp":83218.0,"gdpAdj":null,"pop":null},{"rank":39,"name":"Georgia","type":"state","parent":"United States","gdp":81823.0,"gdpAdj":84973.0,"pop":11302748.0},{"rank":40,"name":"Ohio","type":"state","parent":"United States","gdp":81239.0,"gdpAdj":87567.0,"pop":11900510.0},{"rank":41,"name":"Kansas","type":"state","parent":"United States","gdp":81075.0,"gdpAdj":90015.0,"pop":2977220.0},{"rank":42,"name":"Pennsylvania","type":"state","parent":"United States","gdp":80895.0,"gdpAdj":82908.0,"pop":13059432.0},{"rank":43,"name":"Tennessee","type":"state","parent":"United States","gdp":80630.0,"gdpAdj":87765.0,"pop":7315076.0},{"rank":44,"name":"Hong Kong SAR, China","type":"territory","parent":"China","gdp":80423.0,"gdpAdj":null,"pop":null},{"rank":45,"name":"Oregon","type":"state","parent":"United States","gdp":80225.0,"gdpAdj":77616.0,"pop":4273586.0},{"rank":46,"name":"North Carolina","type":"state","parent":"United States","gdp":79815.0,"gdpAdj":84616.0,"pop":11197968.0},{"rank":47,"name":"Andorra","type":"country","parent":null,"gdp":79567.0,"gdpAdj":null,"pop":null},{"rank":48,"name":"Wisconsin","type":"state","parent":"United States","gdp":79199.0,"gdpAdj":84169.0,"pop":5972787.0},{"rank":49,"name":"Arizona","type":"state","parent":"United States","gdp":78463.0,"gdpAdj":77935.0,"pop":7623818.0},{"rank":50,"name":"Florida","type":"state","parent":"United States","gdp":78195.0,"gdpAdj":75614.0,"pop":23462518.0},{"rank":51,"name":"Indiana","type":"state","parent":"United States","gdp":78188.0,"gdpAdj":83777.0,"pop":6973333.0},{"rank":52,"name":"Austria","type":"country","parent":null,"gdp":76778.0,"gdpAdj":null,"pop":null},{"rank":53,"name":"Germany","type":"country","parent":null,"gdp":75407.0,"gdpAdj":null,"pop":null},{"rank":54,"name":"Rhode Island","type":"state","parent":"United States","gdp":75329.0,"gdpAdj":73650.0,"pop":1114521.0},{"rank":55,"name":"Vermont","type":"state","parent":"United States","gdp":75001.0,"gdpAdj":76564.0,"pop":644663.0},{"rank":56,"name":"Missouri","type":"state","parent":"United States","gdp":74710.0,"gdpAdj":82264.0,"pop":6270541.0},{"rank":57,"name":"Belgium","type":"country","parent":null,"gdp":74676.0,"gdpAdj":null,"pop":null},{"rank":58,"name":"Saudi Arabia","type":"country","parent":null,"gdp":73784.0,"gdpAdj":null,"pop":null},{"rank":59,"name":"Louisiana","type":"state","parent":"United States","gdp":73639.0,"gdpAdj":83484.0,"pop":4618189.0},{"rank":60,"name":"Maine","type":"state","parent":"United States","gdp":72688.0,"gdpAdj":74897.0,"pop":1414874.0},{"rank":61,"name":"Sweden","type":"country","parent":null,"gdp":72529.0,"gdpAdj":null,"pop":null},{"rank":62,"name":"Malta","type":"country","parent":null,"gdp":72210.0,"gdpAdj":null,"pop":null},{"rank":63,"name":"Michigan","type":"state","parent":"United States","gdp":72085.0,"gdpAdj":74919.0,"pop":10127884.0},{"rank":64,"name":"Montana","type":"state","parent":"United States","gdp":71947.0,"gdpAdj":76018.0,"pop":1144694.0},{"rank":65,"name":"Australia","type":"country","parent":null,"gdp":71934.0,"gdpAdj":null,"pop":null},{"rank":66,"name":"New Mexico","type":"state","parent":"United States","gdp":71879.0,"gdpAdj":77950.0,"pop":2125498.0},{"rank":67,"name":"Bahrain","type":"country","parent":null,"gdp":70997.0,"gdpAdj":null,"pop":null},{"rank":68,"name":"South Carolina","type":"state","parent":"United States","gdp":68009.0,"gdpAdj":72544.0,"pop":5570274.0},{"rank":69,"name":"Idaho","type":"state","parent":"United States","gdp":66784.0,"gdpAdj":69935.0,"pop":2029733.0},{"rank":70,"name":"Canada","type":"country","parent":null,"gdp":66746.0,"gdpAdj":null,"pop":null},{"rank":71,"name":"Kentucky","type":"state","parent":"United States","gdp":66617.0,"gdpAdj":73888.0,"pop":4606864.0},{"rank":72,"name":"Oklahoma","type":"state","parent":"United States","gdp":66554.0,"gdpAdj":75765.0,"pop":4123288.0},{"rank":73,"name":"Finland","type":"country","parent":null,"gdp":65884.0,"gdpAdj":null,"pop":null},{"rank":74,"name":"Alabama","type":"state","parent":"United States","gdp":65694.0,"gdpAdj":73961.0,"pop":5193088.0},{"rank":75,"name":"United Kingdom","type":"country","parent":null,"gdp":64606.0,"gdpAdj":null,"pop":null},{"rank":76,"name":"Cyprus","type":"country","parent":null,"gdp":64575.0,"gdpAdj":null,"pop":null},{"rank":77,"name":"France","type":"country","parent":null,"gdp":63975.0,"gdpAdj":null,"pop":null},{"rank":78,"name":"Arkansas","type":"state","parent":"United States","gdp":63703.0,"gdpAdj":73275.0,"pop":3114791.0},{"rank":79,"name":"Korea, Rep.","type":"country","parent":null,"gdp":63125.0,"gdpAdj":null,"pop":null},{"rank":80,"name":"Italy","type":"country","parent":null,"gdp":62803.0,"gdpAdj":null,"pop":null},{"rank":81,"name":"West Virginia","type":"state","parent":"United States","gdp":61873.0,"gdpAdj":69134.0,"pop":1766147.0},{"rank":82,"name":"Czechia","type":"country","parent":null,"gdp":60487.0,"gdpAdj":null,"pop":null},{"rank":83,"name":"Spain","type":"country","parent":null,"gdp":59868.0,"gdpAdj":null,"pop":null},{"rank":84,"name":"Israel","type":"country","parent":null,"gdp":59717.0,"gdpAdj":null,"pop":null},{"rank":85,"name":"Slovenia","type":"country","parent":null,"gdp":59245.0,"gdpAdj":null,"pop":null},{"rank":86,"name":"New Zealand","type":"country","parent":null,"gdp":57350.0,"gdpAdj":null,"pop":null},{"rank":87,"name":"Lithuania","type":"country","parent":null,"gdp":56838.0,"gdpAdj":null,"pop":null},{"rank":88,"name":"Sint Maarten (Dutch part)","type":"territory","parent":"Netherlands","gdp":56491.0,"gdpAdj":null,"pop":null},{"rank":89,"name":"Kuwait","type":"country","parent":null,"gdp":56468.0,"gdpAdj":null,"pop":null},{"rank":90,"name":"Mississippi","type":"state","parent":"United States","gdp":55877.0,"gdpAdj":64261.0,"pop":2954160.0,"noteTag":"Poorest US state","noteText":"Still ranks above Japan and most of the OECD on this measure \u2014 illustrates how wide the internal US spread is."},{"rank":91,"name":"Japan","type":"country","parent":null,"gdp":55422.0,"gdpAdj":null,"pop":null},{"rank":92,"name":"Poland","type":"country","parent":null,"gdp":54262.0,"gdpAdj":null,"pop":null},{"rank":93,"name":"Portugal","type":"country","parent":null,"gdp":53146.0,"gdpAdj":null,"pop":null},{"rank":94,"name":"Puerto Rico (US)","type":"territory","parent":"United States","gdp":52196.0,"gdpAdj":null,"pop":null},{"rank":95,"name":"Estonia","type":"country","parent":null,"gdp":52106.0,"gdpAdj":null,"pop":null},{"rank":96,"name":"Croatia","type":"country","parent":null,"gdp":50946.0,"gdpAdj":null,"pop":null},{"rank":97,"name":"Romania","type":"country","parent":null,"gdp":50895.0,"gdpAdj":null,"pop":null},{"rank":98,"name":"Hungary","type":"country","parent":null,"gdp":49838.0,"gdpAdj":null,"pop":null},{"rank":99,"name":"Russian Federation","type":"country","parent":null,"gdp":49568.0,"gdpAdj":null,"pop":null},{"rank":100,"name":"Slovak Republic","type":"country","parent":null,"gdp":49309.0,"gdpAdj":null,"pop":null},{"rank":101,"name":"Latvia","type":"country","parent":null,"gdp":46137.0,"gdpAdj":null,"pop":null},{"rank":102,"name":"Turkiye","type":"country","parent":null,"gdp":45288.0,"gdpAdj":null,"pop":null},{"rank":103,"name":"Greece","type":"country","parent":null,"gdp":45264.0,"gdpAdj":null,"pop":null},{"rank":104,"name":"Bulgaria","type":"country","parent":null,"gdp":44451.0,"gdpAdj":null,"pop":null},{"rank":105,"name":"Kazakhstan","type":"country","parent":null,"gdp":44293.0,"gdpAdj":null,"pop":null},{"rank":106,"name":"Panama","type":"country","parent":null,"gdp":43902.0,"gdpAdj":null,"pop":null},{"rank":107,"name":"Oman","type":"country","parent":null,"gdp":42295.0,"gdpAdj":null,"pop":null},{"rank":108,"name":"Malaysia","type":"country","parent":null,"gdp":41498.0,"gdpAdj":null,"pop":null},{"rank":109,"name":"Uruguay","type":"country","parent":null,"gdp":38315.0,"gdpAdj":null,"pop":null},{"rank":110,"name":"Chile","type":"country","parent":null,"gdp":37774.0,"gdpAdj":null,"pop":null},{"rank":111,"name":"Trinidad and Tobago","type":"country","parent":null,"gdp":37121.0,"gdpAdj":null,"pop":null},{"rank":112,"name":"St. Kitts and Nevis","type":"country","parent":null,"gdp":36777.0,"gdpAdj":null,"pop":null},{"rank":113,"name":"Seychelles","type":"country","parent":null,"gdp":35854.0,"gdpAdj":null,"pop":null},{"rank":114,"name":"Antigua and Barbuda","type":"country","parent":null,"gdp":35832.0,"gdpAdj":null,"pop":null},{"rank":115,"name":"Montenegro","type":"country","parent":null,"gdp":35423.0,"gdpAdj":null,"pop":null},{"rank":116,"name":"Belarus","type":"country","parent":null,"gdp":34716.0,"gdpAdj":null,"pop":null},{"rank":117,"name":"Serbia","type":"country","parent":null,"gdp":33910.0,"gdpAdj":null,"pop":null},{"rank":118,"name":"Costa Rica","type":"country","parent":null,"gdp":33815.0,"gdpAdj":null,"pop":null},{"rank":119,"name":"Mauritius","type":"country","parent":null,"gdp":33667.0,"gdpAdj":null,"pop":null},{"rank":120,"name":"Argentina","type":"country","parent":null,"gdp":32587.0,"gdpAdj":null,"pop":null},{"rank":121,"name":"Georgia","type":"country","parent":null,"gdp":29414.0,"gdpAdj":null,"pop":null},{"rank":122,"name":"China","type":"country","parent":null,"gdp":29333.0,"gdpAdj":null,"pop":null},{"rank":123,"name":"Dominican Republic","type":"country","parent":null,"gdp":28721.0,"gdpAdj":null,"pop":null},{"rank":124,"name":"St. Lucia","type":"country","parent":null,"gdp":28674.0,"gdpAdj":null,"pop":null},{"rank":125,"name":"Maldives","type":"country","parent":null,"gdp":28555.0,"gdpAdj":null,"pop":null},{"rank":126,"name":"Albania","type":"country","parent":null,"gdp":28221.0,"gdpAdj":null,"pop":null},{"rank":127,"name":"North Macedonia","type":"country","parent":null,"gdp":28029.0,"gdpAdj":null,"pop":null},{"rank":128,"name":"Thailand","type":"country","parent":null,"gdp":26250.0,"gdpAdj":null,"pop":null},{"rank":129,"name":"Azerbaijan","type":"country","parent":null,"gdp":26113.0,"gdpAdj":null,"pop":null},{"rank":130,"name":"Barbados","type":"country","parent":null,"gdp":25894.0,"gdpAdj":null,"pop":null},{"rank":131,"name":"Mexico","type":"country","parent":null,"gdp":25868.0,"gdpAdj":null,"pop":null},{"rank":132,"name":"Bosnia and Herzegovina","type":"country","parent":null,"gdp":25814.0,"gdpAdj":null,"pop":null},{"rank":133,"name":"Armenia","type":"country","parent":null,"gdp":24754.0,"gdpAdj":null,"pop":null},{"rank":134,"name":"Brazil","type":"country","parent":null,"gdp":23433.0,"gdpAdj":null,"pop":null},{"rank":135,"name":"Palau","type":"country","parent":null,"gdp":23052.0,"gdpAdj":null,"pop":null},{"rank":136,"name":"St. Vincent and the Grenadines","type":"country","parent":null,"gdp":22799.0,"gdpAdj":null,"pop":null},{"rank":137,"name":"Dominica","type":"country","parent":null,"gdp":22713.0,"gdpAdj":null,"pop":null},{"rank":138,"name":"Suriname","type":"country","parent":null,"gdp":22652.0,"gdpAdj":null,"pop":null},{"rank":139,"name":"Colombia","type":"country","parent":null,"gdp":22640.0,"gdpAdj":null,"pop":null},{"rank":140,"name":"Turkmenistan","type":"country","parent":null,"gdp":22602.0,"gdpAdj":null,"pop":null},{"rank":141,"name":"Gabon","type":"country","parent":null,"gdp":22218.0,"gdpAdj":null,"pop":null},{"rank":142,"name":"Grenada","type":"country","parent":null,"gdp":21346.0,"gdpAdj":null,"pop":null},{"rank":143,"name":"Mongolia","type":"country","parent":null,"gdp":20798.0,"gdpAdj":null,"pop":null},{"rank":144,"name":"Botswana","type":"country","parent":null,"gdp":20698.0,"gdpAdj":null,"pop":null},{"rank":145,"name":"Egypt, Arab Rep.","type":"country","parent":null,"gdp":20204.0,"gdpAdj":null,"pop":null},{"rank":146,"name":"Paraguay","type":"country","parent":null,"gdp":20181.0,"gdpAdj":null,"pop":null},{"rank":147,"name":"Moldova","type":"country","parent":null,"gdp":19996.0,"gdpAdj":null,"pop":null},{"rank":148,"name":"Iran, Islamic Rep.","type":"country","parent":null,"gdp":19699.0,"gdpAdj":null,"pop":null},{"rank":149,"name":"Bhutan","type":"country","parent":null,"gdp":19594.0,"gdpAdj":null,"pop":null},{"rank":150,"name":"Kosovo","type":"country","parent":null,"gdp":19263.0,"gdpAdj":null,"pop":null},{"rank":151,"name":"Ukraine","type":"country","parent":null,"gdp":18905.0,"gdpAdj":null,"pop":null},{"rank":152,"name":"Peru","type":"country","parent":null,"gdp":18816.0,"gdpAdj":null,"pop":null},{"rank":153,"name":"Algeria","type":"country","parent":null,"gdp":18586.0,"gdpAdj":null,"pop":null},{"rank":154,"name":"Viet Nam","type":"country","parent":null,"gdp":18088.0,"gdpAdj":null,"pop":null},{"rank":155,"name":"Indonesia","type":"country","parent":null,"gdp":17660.0,"gdpAdj":null,"pop":null},{"rank":156,"name":"Sri Lanka","type":"country","parent":null,"gdp":17065.0,"gdpAdj":null,"pop":null},{"rank":157,"name":"Ecuador","type":"country","parent":null,"gdp":16757.0,"gdpAdj":null,"pop":null},{"rank":158,"name":"Libya","type":"country","parent":null,"gdp":16521.0,"gdpAdj":null,"pop":null},{"rank":159,"name":"Fiji","type":"country","parent":null,"gdp":16338.0,"gdpAdj":null,"pop":null},{"rank":160,"name":"Equatorial Guinea","type":"country","parent":null,"gdp":16133.0,"gdpAdj":null,"pop":null},{"rank":161,"name":"South Africa","type":"country","parent":null,"gdp":15906.0,"gdpAdj":null,"pop":null},{"rank":162,"name":"Tunisia","type":"country","parent":null,"gdp":15233.0,"gdpAdj":null,"pop":null},{"rank":163,"name":"Guatemala","type":"country","parent":null,"gdp":15197.0,"gdpAdj":null,"pop":null},{"rank":164,"name":"Belize","type":"country","parent":null,"gdp":14966.0,"gdpAdj":null,"pop":null},{"rank":165,"name":"Iraq","type":"country","parent":null,"gdp":14267.0,"gdpAdj":null,"pop":null},{"rank":166,"name":"Naoero","type":"country","parent":null,"gdp":14200.0,"gdpAdj":null,"pop":null},{"rank":167,"name":"El Salvador","type":"country","parent":null,"gdp":14101.0,"gdpAdj":null,"pop":null},{"rank":168,"name":"Uzbekistan","type":"country","parent":null,"gdp":13601.0,"gdpAdj":null,"pop":null},{"rank":169,"name":"Jamaica","type":"country","parent":null,"gdp":13291.0,"gdpAdj":null,"pop":null},{"rank":170,"name":"Bolivia","type":"country","parent":null,"gdp":12873.0,"gdpAdj":null,"pop":null},{"rank":171,"name":"Jordan","type":"country","parent":null,"gdp":12632.0,"gdpAdj":null,"pop":null},{"rank":172,"name":"Philippines","type":"country","parent":null,"gdp":12577.0,"gdpAdj":null,"pop":null},{"rank":173,"name":"Eswatini","type":"country","parent":null,"gdp":12529.0,"gdpAdj":null,"pop":null},{"rank":174,"name":"Cabo Verde","type":"country","parent":null,"gdp":12165.0,"gdpAdj":null,"pop":null},{"rank":175,"name":"Namibia","type":"country","parent":null,"gdp":11986.0,"gdpAdj":null,"pop":null},{"rank":176,"name":"India","type":"country","parent":null,"gdp":11748.0,"gdpAdj":null,"pop":null},{"rank":177,"name":"Morocco","type":"country","parent":null,"gdp":11112.0,"gdpAdj":null,"pop":null},{"rank":178,"name":"Lao PDR","type":"country","parent":null,"gdp":10383.0,"gdpAdj":null,"pop":null},{"rank":179,"name":"Angola","type":"country","parent":null,"gdp":10251.0,"gdpAdj":null,"pop":null},{"rank":180,"name":"Bangladesh","type":"country","parent":null,"gdp":10154.0,"gdpAdj":null,"pop":null},{"rank":181,"name":"Nigeria","type":"country","parent":null,"gdp":9532.0,"gdpAdj":null,"pop":null},{"rank":182,"name":"Samoa","type":"country","parent":null,"gdp":9319.0,"gdpAdj":null,"pop":null},{"rank":183,"name":"Nicaragua","type":"country","parent":null,"gdp":9284.0,"gdpAdj":null,"pop":null},{"rank":184,"name":"Kyrgyz Republic","type":"country","parent":null,"gdp":9220.0,"gdpAdj":null,"pop":null},{"rank":185,"name":"Marshall Islands","type":"country","parent":null,"gdp":8964.0,"gdpAdj":null,"pop":null},{"rank":186,"name":"Tonga","type":"country","parent":null,"gdp":8675.0,"gdpAdj":null,"pop":null},{"rank":187,"name":"Ghana","type":"country","parent":null,"gdp":8610.0,"gdpAdj":null,"pop":null},{"rank":188,"name":"Cambodia","type":"country","parent":null,"gdp":8543.0,"gdpAdj":null,"pop":null},{"rank":189,"name":"Djibouti","type":"country","parent":null,"gdp":8452.0,"gdpAdj":null,"pop":null},{"rank":190,"name":"Cote d'Ivoire","type":"country","parent":null,"gdp":8209.0,"gdpAdj":null,"pop":null},{"rank":191,"name":"Honduras","type":"country","parent":null,"gdp":7871.0,"gdpAdj":null,"pop":null},{"rank":192,"name":"Mauritania","type":"country","parent":null,"gdp":7676.0,"gdpAdj":null,"pop":null},{"rank":193,"name":"Congo, Rep.","type":"country","parent":null,"gdp":7248.0,"gdpAdj":null,"pop":null},{"rank":194,"name":"Kenya","type":"country","parent":null,"gdp":7016.0,"gdpAdj":null,"pop":null},{"rank":195,"name":"Tuvalu","type":"country","parent":null,"gdp":6759.0,"gdpAdj":null,"pop":null},{"rank":196,"name":"Pakistan","type":"country","parent":null,"gdp":6573.0,"gdpAdj":null,"pop":null},{"rank":197,"name":"Zimbabwe","type":"country","parent":null,"gdp":6470.0,"gdpAdj":null,"pop":null},{"rank":198,"name":"Sao Tome and Principe","type":"country","parent":null,"gdp":6388.0,"gdpAdj":null,"pop":null},{"rank":199,"name":"Nepal","type":"country","parent":null,"gdp":6175.0,"gdpAdj":null,"pop":null},{"rank":200,"name":"Myanmar","type":"country","parent":null,"gdp":6012.0,"gdpAdj":null,"pop":null},{"rank":201,"name":"Tajikistan","type":"country","parent":null,"gdp":5923.0,"gdpAdj":null,"pop":null},{"rank":202,"name":"Cameroon","type":"country","parent":null,"gdp":5788.0,"gdpAdj":null,"pop":null},{"rank":203,"name":"Senegal","type":"country","parent":null,"gdp":5463.0,"gdpAdj":null,"pop":null},{"rank":204,"name":"Papua New Guinea","type":"country","parent":null,"gdp":5215.0,"gdpAdj":null,"pop":null},{"rank":205,"name":"West Bank and Gaza","type":"country","parent":null,"gdp":5000.0,"gdpAdj":null,"pop":null},{"rank":206,"name":"Guinea","type":"country","parent":null,"gdp":4935.0,"gdpAdj":null,"pop":null},{"rank":207,"name":"Benin","type":"country","parent":null,"gdp":4817.0,"gdpAdj":null,"pop":null},{"rank":208,"name":"Timor-Leste","type":"country","parent":null,"gdp":4809.0,"gdpAdj":null,"pop":null},{"rank":209,"name":"Micronesia, Fed. Sts.","type":"country","parent":null,"gdp":4604.0,"gdpAdj":null,"pop":null},{"rank":210,"name":"Vanuatu","type":"country","parent":null,"gdp":4525.0,"gdpAdj":null,"pop":null},{"rank":211,"name":"Tanzania","type":"country","parent":null,"gdp":4471.0,"gdpAdj":null,"pop":null},{"rank":212,"name":"Zambia","type":"country","parent":null,"gdp":4379.0,"gdpAdj":null,"pop":null},{"rank":213,"name":"Comoros","type":"country","parent":null,"gdp":4238.0,"gdpAdj":null,"pop":null},{"rank":214,"name":"Rwanda","type":"country","parent":null,"gdp":4164.0,"gdpAdj":null,"pop":null},{"rank":215,"name":"Togo","type":"country","parent":null,"gdp":4079.0,"gdpAdj":null,"pop":null},{"rank":216,"name":"Kiribati","type":"country","parent":null,"gdp":3937.0,"gdpAdj":null,"pop":null},{"rank":217,"name":"Sierra Leone","type":"country","parent":null,"gdp":3717.0,"gdpAdj":null,"pop":null},{"rank":218,"name":"Gambia, The","type":"country","parent":null,"gdp":3706.0,"gdpAdj":null,"pop":null},{"rank":219,"name":"Ethiopia","type":"country","parent":null,"gdp":3622.0,"gdpAdj":null,"pop":null},{"rank":220,"name":"Mali","type":"country","parent":null,"gdp":3503.0,"gdpAdj":null,"pop":null},{"rank":221,"name":"Uganda","type":"country","parent":null,"gdp":3488.0,"gdpAdj":null,"pop":null},{"rank":222,"name":"Guinea-Bissau","type":"country","parent":null,"gdp":3293.0,"gdpAdj":null,"pop":null},{"rank":223,"name":"Lesotho","type":"country","parent":null,"gdp":3184.0,"gdpAdj":null,"pop":null},{"rank":224,"name":"Haiti","type":"country","parent":null,"gdp":3134.0,"gdpAdj":null,"pop":null},{"rank":225,"name":"Burkina Faso","type":"country","parent":null,"gdp":3072.0,"gdpAdj":null,"pop":null},{"rank":226,"name":"Chad","type":"country","parent":null,"gdp":2903.0,"gdpAdj":null,"pop":null},{"rank":227,"name":"Solomon Islands","type":"country","parent":null,"gdp":2788.0,"gdpAdj":null,"pop":null},{"rank":228,"name":"Sudan","type":"country","parent":null,"gdp":2192.0,"gdpAdj":null,"pop":null},{"rank":229,"name":"Niger","type":"country","parent":null,"gdp":2177.0,"gdpAdj":null,"pop":null},{"rank":230,"name":"Liberia","type":"country","parent":null,"gdp":1981.0,"gdpAdj":null,"pop":null},{"rank":231,"name":"Madagascar","type":"country","parent":null,"gdp":1952.0,"gdpAdj":null,"pop":null},{"rank":232,"name":"Congo, Dem. Rep.","type":"country","parent":null,"gdp":1920.0,"gdpAdj":null,"pop":null},{"rank":233,"name":"Malawi","type":"country","parent":null,"gdp":1899.0,"gdpAdj":null,"pop":null},{"rank":234,"name":"Mozambique","type":"country","parent":null,"gdp":1698.0,"gdpAdj":null,"pop":null},{"rank":235,"name":"Somalia, Fed. Rep.","type":"country","parent":null,"gdp":1643.0,"gdpAdj":null,"pop":null},{"rank":236,"name":"Central African Republic","type":"country","parent":null,"gdp":1314.0,"gdpAdj":null,"pop":null},{"rank":237,"name":"Burundi","type":"country","parent":null,"gdp":1248.0,"gdpAdj":null,"pop":null}];
+
+let pcSortKey = "rank", pcSortDir = 1, pcFilter = "all", pcQuery = "", pcRppAdj = false;
+
+const pcRowsEl = document.getElementById("pc-rows");
+const pcCountEl = document.getElementById("pc-count-val");
+const pcEmptyEl = document.getElementById("pc-empty");
+const pcEmptyQEl = document.getElementById("pc-empty-q");
+
+function pcFmt(n) {
+  if (n === null || n === undefined) return "&mdash;";
+  return Math.round(n).toLocaleString("en-US");
+}
+
+function pcRender() {
+  let rows = PC_DATA.filter(r => pcFilter === "all" || r.type === pcFilter);
+  if (pcQuery) {
+    const q = pcQuery.toLowerCase();
+    rows = rows.filter(r => r.name.toLowerCase().includes(q) || (r.parent && r.parent.toLowerCase().includes(q)));
+  }
+  rows = rows.slice().sort((a, b) => {
+    let av, bv;
+    if (pcSortKey === "gdp" && pcRppAdj) {
+      av = a.type === "state" && a.gdpAdj != null ? a.gdpAdj : a.gdp;
+      bv = b.type === "state" && b.gdpAdj != null ? b.gdpAdj : b.gdp;
+    } else {
+      av = a[pcSortKey]; bv = b[pcSortKey];
+    }
+    if (av == null) return 1;
+    if (bv == null) return -1;
+    if (typeof av === "string") return av.localeCompare(bv) * pcSortDir;
+    return (av - bv) * pcSortDir;
+  });
+
+  pcCountEl.textContent = rows.length;
+  pcEmptyEl.hidden = rows.length !== 0;
+  pcEmptyQEl.textContent = pcQuery;
+
+  pcRowsEl.innerHTML = rows.map(r => {
+    const tagClass = r.type === "state" ? "a" : (r.type === "territory" ? "b" : "b");
+    const tagLabel = r.type === "state" ? "State" : r.type === "territory" ? "Territory" : "Country";
+    const parent = r.parent ? `<span class="parent">${r.parent}</span>` : "";
+    const note = r.noteTag ? `<span class="note-flag" title="${r.noteText.replace(/"/g, '&quot;')}">i</span>` : "";
+    let gdpMain, gdpSec = "";
+    if (r.type === "state" && pcRppAdj && r.gdpAdj != null) {
+      gdpMain = "$" + pcFmt(r.gdpAdj);
+      gdpSec = `<span class="sec">unadj. $${pcFmt(r.gdp)}</span>`;
+    } else {
+      gdpMain = "$" + pcFmt(r.gdp);
+    }
+    return `<tr>
+      <td class="rank">${r.rank}</td>
+      <td class="name">${r.name}${note}${parent}</td>
+      <td><span class="tag ${tagClass}">${tagLabel}</span></td>
+      <td class="num">${gdpMain}${gdpSec}</td>
+      <td class="num">${pcFmt(r.pop)}</td>
+    </tr>`;
+  }).join("");
+}
+
+document.getElementById("pc-q").addEventListener("input", e => {
+  pcQuery = e.target.value.trim();
+  pcRender();
+});
+
+document.getElementById("pc-pills").addEventListener("click", e => {
+  const btn = e.target.closest(".pc-pill");
+  if (!btn) return;
+  pcFilter = btn.dataset.filter;
+  document.querySelectorAll(".pc-pill").forEach(p => p.setAttribute("aria-pressed", p === btn));
+  pcRender();
+});
+
+document.getElementById("pc-rpp").addEventListener("change", e => {
+  pcRppAdj = e.target.checked;
+  pcRender();
+});
+
+document.querySelectorAll("#pc-table thead th").forEach(th => {
+  th.addEventListener("click", () => {
+    const key = th.dataset.key;
+    if (pcSortKey === key) { pcSortDir *= -1; } else { pcSortKey = key; pcSortDir = key === "rank" ? 1 : -1; }
+    document.querySelectorAll("#pc-table thead th").forEach(t => t.removeAttribute("data-active"));
+    th.setAttribute("data-active", "true");
+    th.querySelector(".arrow").innerHTML = pcSortDir === 1 ? "&#9650;" : "&#9660;";
+    pcRender();
+  });
+});
+
+pcRender();
+</script>
+
+</body>
+</html>
